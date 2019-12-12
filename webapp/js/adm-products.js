@@ -420,26 +420,9 @@ new Vue({
   },
   computed: {
     productsSorted: function() {
-      var filtered = this.onFilterChange(this.objFilter);
-      return filtered
-        .sort((a, b) => {
-          let modifier = 1;
-          if (this.currentSortDir === "desc") modifier = -1;
-          if (this.currentSort == "id") {
-            if (parseInt(a[this.currentSort]) < parseInt(b[this.currentSort])) return -1 * modifier;
-            if (parseInt(a[this.currentSort]) > parseInt(b[this.currentSort])) return 1 * modifier;
-          } else {
-            if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-            if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-          }
+      let filtered = this.onFilterChange(this.objFilter);
 
-          return 0;
-        })
-        .filter((row, index) => {
-          let start = (this.currentPage - 1) * this.selected;
-          let end = this.currentPage * this.selected;
-          if (index >= start && index < end) return true;
-        });
+      return sortData(filtered, this.currentSort, this.currentSortDir, this.currentPage, this.selected);
     }
   },
 

@@ -63,9 +63,9 @@ new Vue({
     },
     showHideAddNew: function(_mode) {
       if (_mode == "show") {
-        document.getElementById("addNew").style.display = "flex";
+        document.prevDoclementById("addNew").style.display = "flex";
       } else {
-        document.getElementById("addNew").style.display = "none";
+        document.prevDoclementById("addNew").style.display = "none";
       }
     },
     clearAddNew: function() {
@@ -104,7 +104,7 @@ new Vue({
     previewText: function(_docType) {
       return this.phrasesFilter.PREVIEW + " " + _docType.split(" ")[0];
     },
-    gete: function(_id, _gt, _mode) {
+    prevDoc: function(_id, _gt, _mode) {
       var posted = serverPost(settings.apiUrl + "docs", {
         token: token.jwt,
         id: _id,
@@ -128,26 +128,9 @@ new Vue({
   },
   computed: {
     computedDocs: function() {
-      var filtered = this.onFilterChange(this.objFilter);
-      return filtered
-        .sort((a, b) => {
-          let modifier = 1;
-          if (this.currentSortDir === "desc") modifier = -1;
-          if (this.currentSort == "id") {
-            if (parseInt(a[this.currentSort]) < parseInt(b[this.currentSort])) return -1 * modifier;
-            if (parseInt(a[this.currentSort]) > parseInt(b[this.currentSort])) return 1 * modifier;
-          } else {
-            if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-            if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-          }
+      let filtered = this.onFilterChange(this.objFilter);
 
-          return 0;
-        })
-        .filter((row, index) => {
-          let start = (this.currentPage - 1) * this.selected;
-          let end = this.currentPage * this.selected;
-          if (index >= start && index < end) return true;
-        });
+      return sortData(filtered, this.currentSort, this.currentSortDir, this.currentPage, this.selected);
     }
   },
   components: {
@@ -185,7 +168,7 @@ new Vue({
               onMouseEnter="this.children[1].classList.toggle('show')" 
               onMouseLeave="this.children[1].classList.toggle('show')">
                 <a class="bg-white btn btn-small btn-outline-primary fa fa-search"                   
-                  v-on:click="gete(doc.id, doc.docType, 'gz')" ></a>
+                  v-on:click="prevDoc(doc.id, doc.docType, 'gz')" ></a>
                 <span class="popuptext" id="myPopup">{{phrasesFilter.SHOW_DETAILS}}</span>
             </div>
 
@@ -202,7 +185,7 @@ new Vue({
       </tbody>
       <tfoot v-else>
         <tr class="text-center" >
-          <td colspan="4">{{phrases.NO_DATA}}</td>
+          <td colspan="5">{{phrases.NO_DATA}}</td>
         </tr>
       </tfoot>
     </table>

@@ -136,19 +136,9 @@ window.onload = () => {
     },
     computed: {
       productsSorted: function() {
-        return this.onFilterChange(this.objFilter)
-          .sort((a, b) => {
-            let modifier = 1;
-            if (this.currentSortDir === "desc") modifier = -1;
-            if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-            if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-            return 0;
-          })
-          .filter((row, index) => {
-            let start = (this.currentPage - 1) * this.selected;
-            let end = this.currentPage * this.selected;
-            if (index >= start && index < end) return true;
-          });
+        let filtered = this.onFilterChange(this.objFilter);
+
+        return sortData(filtered, this.currentSort, this.currentSortDir, this.currentPage, this.selected);
       }
     },
     components: {
