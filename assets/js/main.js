@@ -295,8 +295,6 @@ var filterData = (_data, _obj, _selected, _fields = {}) => {
     });
   }
 
-  console.log(filtered, _selected);
-
   return { filtered, _selected };
 };
 
