@@ -10,7 +10,7 @@ new Vue({
     document.getElementsByTagName("article")[0].children[0].removeAttribute("class");
   },
   methods: {
-    pobierzDane: function() {
+    redeemData: function() {
       try {
         var parsed = JSON.parse(localStorage.getItem(LSI));
 
@@ -18,7 +18,7 @@ new Vue({
         //   ids: parsed.products.join(","),
         //   token: token.jwt
         // });
-        
+
         var response = serverGet(settings.apiUrl + "cart", {
           ids: parsed.products.join(","),
           token: token.jwt

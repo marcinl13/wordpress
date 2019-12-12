@@ -22,10 +22,10 @@ new Vue({
     }
   },
   created: function() {
-    this.pobierzDane();
+    this.redeemData();
   },
   methods: {
-    pobierzDane: function() {
+    redeemData: function() {
       try {
         var response = serverGet(settings.apiUrl + "docs", {
           token: token.jwt
@@ -69,9 +69,9 @@ new Vue({
       }
     },
     clearAddNew: function() {
-      this.pobierzDane();
+      this.redeemData();
     },
-    onFilterChange2: function(_obj) {
+    onFilterChange: function(_obj) {
       let filtered = this.docs;
 
       this.objFilter = _obj;
@@ -105,7 +105,6 @@ new Vue({
       return this.phrasesFilter.PREVIEW + " " + _docType.split(" ")[0];
     },
     gete: function(_id, _gt, _mode) {
-
       var posted = serverPost(settings.apiUrl + "docs", {
         token: token.jwt,
         id: _id,
@@ -129,7 +128,7 @@ new Vue({
   },
   computed: {
     computedDocs: function() {
-      var filtered = this.onFilterChange2(this.objFilter);
+      var filtered = this.onFilterChange(this.objFilter);
       return filtered
         .sort((a, b) => {
           let modifier = 1;
@@ -163,7 +162,7 @@ new Vue({
       :currentPage=currentPage  
       :selectRows=selected 
       :optionBarSettings=optionBarSettingsTop
-      :filterProps=onFilterChange2
+      :filterProps=onFilterChange
     />
 
     <table class="table table-striped table-hover table-sm ">

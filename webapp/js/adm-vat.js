@@ -25,10 +25,10 @@ new Vue({
     }
   },
   created: function() {
-    this.pobierzDane();
+    this.redeemData();
   },
   methods: {
-    pobierzDane: function() {
+    redeemData: function() {
       try {
         var response = serverGet(settings.apiUrl + "vat", {
           token: token.jwt
@@ -41,7 +41,7 @@ new Vue({
       } catch (error) {}
     },
     clearAddNew: function() {
-      this.pobierzDane();
+      this.redeemData();
     },
     sort: function(s) {
       if (s === this.currentSort) {
@@ -75,7 +75,7 @@ new Vue({
       }
     },
     clearAddNew: function() {
-      this.pobierzDane();
+      this.redeemData();
     },
     onCreateVat: function() {
       this.onEditVat();
@@ -169,7 +169,7 @@ new Vue({
             if (deleted.status == 200) {
               Swal.fire("", deleted.message, "success");
 
-              this.pobierzDane();
+              this.redeemData();
             } else {
               Swal.fire("", deleted.message, "warning");
             }
@@ -177,7 +177,7 @@ new Vue({
         }
       });
     },
-    onFilterChange2: function(_obj) {
+    onFilterChange: function(_obj) {
       let filtered = this.vatList;
 
       this.objFilter = _obj;
@@ -200,7 +200,7 @@ new Vue({
   },
   computed: {
     ComputedVat: function() {
-      var filtered = this.onFilterChange2(this.objFilter);
+      var filtered = this.onFilterChange(this.objFilter);
       return filtered
         .sort((a, b) => {
           let modifier = 1;
@@ -236,7 +236,7 @@ new Vue({
       :selectRows=selected 
       :optionBarSettings=optionBarSettingsTop
       :onAddNew=onCreateVat
-      :filterProps=onFilterChange2
+      :filterProps=onFilterChange
     /> 
     
     <table class="table table-striped table-hover table-sm ">

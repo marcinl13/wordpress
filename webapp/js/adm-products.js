@@ -29,10 +29,10 @@ new Vue({
     }
   },
   created: function() {
-    this.pobierzDane();
+    this.redeemData();
   },
   methods: {
-    pobierzDane: function() {
+    redeemData: function() {
       try {
         var response1 = serverGet(settings.apiUrl + "vat", {
           token: token.jwt
@@ -124,7 +124,7 @@ new Vue({
         defaultVat = filtered.id_stawki;
         defaultBrutto = filtered.brutto;
         defaultDetails = filtered.opis || "";
-        defaultImage = filtered.zdjecie || '';
+        defaultImage = filtered.zdjecie || "";
         defaultUnit = filtered.jm || "szt";
         defaultQuantity = filtered.quantity || 0;
       }
@@ -278,7 +278,7 @@ new Vue({
           if (deleted.status == 200) {
             Swal.fire("", deleted.message, "success");
 
-            this.pobierzDane();
+            this.redeemData();
           } else {
             Swal.fire("", deleted.message, "warning");
           }
@@ -342,7 +342,7 @@ new Vue({
 
       return filtered;
     },
-    onFilterChange2: function(_obj) {
+    onFilterChange: function(_obj) {
       let filtered = this.products;
 
       this.objFilter = _obj;
@@ -407,7 +407,7 @@ new Vue({
           if (postRes.status == 201 || postRes.status == 200) {
             Swal.fire("", postRes.message, "success");
 
-            this.pobierzDane();
+            this.redeemData();
           } else {
             Swal.fire("", postRes.message, "warning");
           }
@@ -420,7 +420,7 @@ new Vue({
   },
   computed: {
     productsSorted: function() {
-      var filtered = this.onFilterChange2(this.objFilter);
+      var filtered = this.onFilterChange(this.objFilter);
       return filtered
         .sort((a, b) => {
           let modifier = 1;
@@ -452,7 +452,7 @@ new Vue({
       :currentPage=currentPage  
       :selectRows=selected 
       :optionBarSettings=optionBarSettingsTop
-      :filterProps=onFilterChange2
+      :filterProps=onFilterChange
       :onAddNew=createProduct 
     /> 
 

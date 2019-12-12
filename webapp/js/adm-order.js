@@ -25,10 +25,10 @@ new Vue({
     }
   },
   created: function() {
-    this.pobierzDane();
+    this.redeemData();
   },
   methods: {
-    pobierzDane: function() {
+    redeemData: function() {
       try {
         var response = serverGet(settings.apiUrl + "orders", {
           token: token.jwt
@@ -133,7 +133,7 @@ new Vue({
         }
       });
     },
-    onFilterChange2: function(_obj) {
+    onFilterChange: function(_obj) {
       let filtered = this.orders;
 
       this.objFilter = _obj;
@@ -180,7 +180,7 @@ new Vue({
   },
   computed: {
     orderSorted: function() {
-      var filtered = this.onFilterChange2(this.objFilter);
+      var filtered = this.onFilterChange(this.objFilter);
 
       return filtered
         .sort((a, b) => {
@@ -215,7 +215,7 @@ new Vue({
       :currentPage=currentPage  
       :selectRows=selected 
       :optionBarSettings=optionBarSettingsTop
-      :filterProps=onFilterChange2
+      :filterProps=onFilterChange
     />  
 
     <table class="zamowienia table table-striped table-hover table-sm ">
@@ -255,15 +255,9 @@ new Vue({
             <i v-if="zamowienie.completed == 1" class="fa fa-check green"></i>
             <i v-else class="fa fa-close red"></i>
           </td>
-          <td class="text-center" style="vertical-align: middle !important;">{{zamowienie.price}} ${
-            currencyCode[0]
-          }</td>          
-          <td class="text-center" style="vertical-align: middle !important;">{{zamowienie.priceTransport}} ${
-            currencyCode[0]
-          }</td>          
-          <td class="text-center" style="vertical-align: middle !important;">{{zamowienie.total}} ${
-            currencyCode[0]
-          }</td>          
+          <td class="text-center" style="vertical-align: middle !important;">{{zamowienie.price}} ${currencyCode[0]}</td>          
+          <td class="text-center" style="vertical-align: middle !important;">{{zamowienie.priceTransport}} ${currencyCode[0]}</td>          
+          <td class="text-center" style="vertical-align: middle !important;">{{zamowienie.total}} ${currencyCode[0]}</td>          
           <td  class="" style="vertical-align: middle !important;  text-align: center !important;">
 
              <div class="popup" 

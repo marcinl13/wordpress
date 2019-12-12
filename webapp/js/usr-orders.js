@@ -28,10 +28,10 @@ new Vue({
     document.getElementsByTagName("article")[0].children[0].remove();
     document.getElementsByTagName("article")[0].children[0].removeAttribute("class");
 
-    this.pobierzDane();
+    this.redeemData();
   },
   methods: {
-    pobierzDane: function() {
+    redeemData: function() {
       try {
         var response = serverGet(settings.apiUrl + "orders", {
           token: token.jwt
@@ -101,7 +101,7 @@ new Vue({
         focusConfirm: false
       });
     },
-    onFilterChange2: function(_obj) {
+    onFilterChange: function(_obj) {
       let filtered = this.orders;
 
       this.objFilter = _obj;
@@ -136,7 +136,7 @@ new Vue({
   },
   computed: {
     orderSorted: function() {
-      var filterd = this.onFilterChange2(this.objFilter);
+      var filterd = this.onFilterChange(this.objFilter);
       return filterd
         .sort((a, b) => {
           let modifier = 1;
@@ -170,7 +170,7 @@ new Vue({
       :currentPage=currentPage  
       :selectRows=selected 
       :optionBarSettings=optionBarSettingsTop
-      :filterProps=onFilterChange2
+      :filterProps=onFilterChange
     /> 
 
     <table class="zamowienia table table-striped table-hover table-sm ">

@@ -41,16 +41,16 @@ window.onload = () => {
       document.getElementsByTagName("article")[0].children[0].removeAttribute("class");
     },
     created: function() {
-      this.pobierzDane();
+      this.redeemData();
 
-      if(localStorage.getItem("ListType")){
-        this.currentListType = localStorage.getItem("ListType")=="grid" ? "grid" : "list";
-      }else{
+      if (localStorage.getItem("ListType")) {
+        this.currentListType = localStorage.getItem("ListType") == "grid" ? "grid" : "list";
+      } else {
         localStorage.setItem("ListType", "grid");
       }
     },
     methods: {
-      pobierzDane: function() {
+      redeemData: function() {
         try {
           var rowsPerSite = parseInt(JSON.parse(localStorage.getItem(LSI)).rowsPerSite);
 
@@ -63,7 +63,6 @@ window.onload = () => {
           if (response.status == 200) {
             this.products = response.data;
             this.onFilterLenght = this.products.data.length;
-            
           }
         } catch (error) {}
       },
@@ -100,12 +99,11 @@ window.onload = () => {
         return false;
       },
       onChangeListType: function(_type) {
-
         localStorage.setItem("ListType", _type ? "grid" : "list");
 
         this.currentListType = _type ? "grid" : "list";
       },
-      onFilterChange2: function(_obj) {
+      onFilterChange: function(_obj) {
         let filtered = this.products;
 
         this.objFilter = _obj;
@@ -138,7 +136,7 @@ window.onload = () => {
     },
     computed: {
       productsSorted: function() {
-        return this.onFilterChange2(this.objFilter)
+        return this.onFilterChange(this.objFilter)
           .sort((a, b) => {
             let modifier = 1;
             if (this.currentSortDir === "desc") modifier = -1;
@@ -167,7 +165,7 @@ window.onload = () => {
           :currentPage=currentPage  
           :selectRows=selected 
           :optionBarSettings=optionBarSettingsTop
-          :filterProps=onFilterChange2
+          :filterProps=onFilterChange
         />
 
         <div>
