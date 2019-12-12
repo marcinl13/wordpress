@@ -1,5 +1,8 @@
 <?php
 
+//v18
+define("GEN_PDF", ROOT . "genPDF" . DS); //new
+
 #region interfaces
 
 
@@ -77,7 +80,7 @@ include_once TABLE_DB . "tInvoices.php";
 include_once TABLE_DB . "cTables.php"; //
 
 //v19
-include_once TABLE_DB ."DBConnection.php";
+include_once TABLE_DB . "DBConnection.php";
 #endregion
 
 #region other
@@ -113,7 +116,6 @@ include_once ACCOUNTANCY . "DataRefactor.php";
 include_once ACCOUNTANCY . "BuildTable.php";
 include_once ACCOUNTANCY . 'NumberToTextPL.php';
 include_once ACCOUNTANCY . "DOC_numeration.php";
-include_once ACCOUNTANCY . 'HtmlToPDF.php';
 
 
 include_once ACCOUNTANCY . "addInvoice.php";
@@ -126,10 +128,13 @@ include_once ACCOUNTANCY . "DOC_PZ.php";
 include_once ACCOUNTANCY . "DOC_FVS.php";
 
 
-include_once ACCOUNTANCY . "PrefabPDF.php";
-include_once ACCOUNTANCY . "HTML_FVS.php";
-include_once ACCOUNTANCY . "HTML_WZ.php";
-include_once ACCOUNTANCY . "HTML_PZ.php";
-
 #endregion
 
+#region gen pdf
+include_once GEN_PDF . 'HtmlToPDF.php';
+include_once GEN_PDF . "PrefabPDF.php";
+
+include_once GEN_PDF . "HTML_FVS.php";
+include_once GEN_PDF . "HTML_WZ.php";
+include_once GEN_PDF . "HTML_PZ.php";
+#endregion
