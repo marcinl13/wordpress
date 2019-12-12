@@ -226,6 +226,30 @@ let getDateMonthList = (_lang = null) => {
   return months;
 };
 
+/**================================= views ================================= */
+
+var sortData = (_dataFiltered, _currentSort, _currentSortDir, _currentPage, _selected) => {
+  return _dataFiltered
+    .sort((a, b) => {
+      let modifier = 1;
+      if (_currentSortDir === "desc") modifier = -1;
+      if (_currentSort == "id") {
+        if (parseInt(a[_currentSort]) < parseInt(b[_currentSort])) return -1 * modifier;
+        if (parseInt(a[_currentSort]) > parseInt(b[_currentSort])) return 1 * modifier;
+      } else {
+        if (a[_currentSort] < b[_currentSort]) return -1 * modifier;
+        if (a[_currentSort] > b[_currentSort]) return 1 * modifier;
+      }
+
+      return 0;
+    })
+    .filter((row, index) => {
+      let start = (_currentPage - 1) * _selected;
+      let end = _currentPage * _selected;
+      if (index >= start && index < end) return true;
+    });
+};
+
 /**================================= end ================================= */
 
 let FILTER_CAT = "searchCategory";
