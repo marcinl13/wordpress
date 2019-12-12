@@ -159,23 +159,8 @@ class AdminKokpitMenu
 
   public function  optionStats()
   {
-    /**
-     * zysk straty
-     * niedobory
-     * ostatnio dodane produkty
-     * najczesciej wybierane
-     */
-
-    CustomHooks::AddHookLanguage('ADMIN_STATYSTIC');
-
-    echo "<div>";
     $draw1 = new Statystic();
-    $draw1->drawChart01();
-    $draw1->drawChart02();
-    $draw1->drawChart03();
-    $draw1->drawChart04();
-
-    $draw1->drawLastProduct(6);
+    $draw1->buildPage();
   }
 
   public function optionProducts()

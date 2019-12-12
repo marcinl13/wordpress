@@ -9,7 +9,19 @@ class Statystic
 {
 
   function __construct()
+  { }
+
+  public function buildPage()
   {
+    CustomHooks::AddHookLanguage('ADMIN_STATYSTIC');
+
+    echo "<div>";
+
+    self::drawChart01();
+    self::drawChart02();
+    self::drawChart03();
+    self::drawChart04();
+    self::drawLastProduct(6);
   }
 
   //charts
