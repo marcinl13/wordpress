@@ -252,7 +252,7 @@ new Vue({
 
             this.products = [{}];
             this.products = edited.data;
-            this.onFiltered();
+            // this.onFiltered();
           } else {
             Swal.fire("", edited.message, "warning");
           }
@@ -285,90 +285,18 @@ new Vue({
         }
       });
     },
-    onFilterChange: function(_filter, _value) {
-      switch (_filter) {
-        case "searchCategory":
-          this.filters.searchCategory = _value;
-          break;
-        case "searchStatus":
-          this.filters.searchStatus = _value;
-          break;
-        case "rowPerPage":
-          this.selected = _value;
-          this.filters.rowPerPage = _value;
-          break;
-        case "searchDateBegin":
-          this.filters.searchDateBegin = _value;
-          break;
-        case "searchDateEnd":
-          this.filters.searchDateEnd = _value;
-          break;
-        case "searchStartWith":
-          this.filters.searchStartWith = _value;
-          break;
-        default:
-          this.filters.searchStartWith = _value;
-          break;
-      }
-
-      this.onFiltered();
-    },
-    onFiltered: function() {
-      var filtered = this.products;
-
-      if (this.filters.searchStartWith != "") {
-        var filterByName = this.filters.searchStartWith.toLowerCase();
-
-        filtered = filtered.filter(function(data) {
-          return data.nazwa.toLowerCase().indexOf(filterByName) == 0;
-        });
-      }
-      if (this.filters.searchCategory != 0) {
-        var filterByCat = parseInt(this.filters.searchCategory);
-
-        filtered = filtered.filter(function(data) {
-          return parseInt(data.id_kategori) == filterByCat;
-        });
-      }
-      if (this.filters.searchStatus != 0) {
-        var filterByStatus = parseInt(this.filters.searchStatus);
-
-        filtered = filtered.filter(function(data) {
-          return parseInt(data.id_statusu) == filterByStatus;
-        });
-      }
-
-      this.onFilterLenght = filtered.length;
-
-      return filtered;
-    },
     onFilterChange: function(_obj) {
-      let filtered = this.products;
-
       this.objFilter = _obj;
 
-      if (_obj != undefined && _obj.type == FILTER_ROWPAGE) {
-        this.selected = parseInt(_obj.val);
-      }
-      if (_obj != undefined && _obj.type == FILTER_STW && _obj.val != "") {
-        var filterByName = _obj.val.toLowerCase();
+      let dataFiltered = filterData(this.products, _obj, this.selected, {
+        FILTER_STW: "nazwa",
+        FILTER_CAT: "id_kategori",
+        FILTER_STATUS: "id_statusu"
+      });
 
-        filtered = filtered.filter(function(data) {
-          return data.nazwa.toLowerCase().indexOf(filterByName) == 0;
-        });
-      }
-      if (_obj != undefined && _obj.type == FILTER_CAT && _obj.val != 0) {
-        filtered = filtered.filter(function(data) {
-          return parseInt(data.id_kategori) === parseInt(_obj.val);
-        });
-      }
-      if (_obj != undefined && _obj.type == FILTER_STATUS && _obj.val != 0) {
-        filtered = filtered.filter(function(data) {
-          return parseInt(data.id_statusu) === parseInt(_obj.val);
-        });
-      }
-
+      let filtered = dataFiltered.filtered;
       this.onFilterLenght = filtered.length;
+      this.selected = dataFiltered._selected;
 
       return filtered;
     },

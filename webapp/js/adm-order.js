@@ -134,46 +134,19 @@ new Vue({
       });
     },
     onFilterChange: function(_obj) {
-      let filtered = this.orders;
-
       this.objFilter = _obj;
 
-      if (_obj != undefined && _obj.type == FILTER_ROWPAGE) {
-        this.selected = parseInt(_obj.val);
-      }
-      if (_obj != undefined && _obj.type == FILTER_STW && _obj.val != "") {
-        var filterByName = _obj.val.toLowerCase();
+      let dataFiltered = filterData(this.orders, _obj, this.selected, {
+        FILTER_STW: "user",
+        FILTER_CAT: "id_kategori",
+        FILTER_STATUS: "id_statusu",
+        FILTER_DSTART: "data_zamowienia",
+        FILTER_DEND: "data_realizacji"
+      });
 
-        filtered = filtered.filter(function(data) {
-          return data.user.toLowerCase().indexOf(filterByName) == 0;
-        });
-      }
-      if (_obj != undefined && _obj.type == FILTER_CAT && _obj.val != 0) {
-        filtered = filtered.filter(function(data) {
-          return parseInt(data.id_kategori) === parseInt(_obj.val);
-        });
-      }
-      if (_obj != undefined && _obj.type == FILTER_STATUS && _obj.val != 0) {
-        filtered = filtered.filter(function(data) {
-          return parseInt(data.id_statusu) === parseInt(_obj.val);
-        });
-      }
-      if (_obj != undefined && _obj.type == FILTER_DSTART && _obj.val != 0) {
-        filtered = filtered.filter(function(data) {
-          var dataBegin = new Date(data.data_zamowienia).getMonth() + 1;
-
-          return dataBegin >= parseInt(_obj.val);
-        });
-      }
-      if (_obj != undefined && _obj.type == FILTER_DEND && _obj.val != 0) {
-        filtered = filtered.filter(function(data) {
-          var dataEnd = new Date(data.data_realizacji).getMonth() + 1;
-
-          if (data.data_realizacji != null) return dataEnd <= parseInt(_obj.val);
-        });
-      }
-
+      let filtered = dataFiltered.filtered;
       this.onFilterLenght = filtered.length;
+      this.selected = dataFiltered._selected;
 
       return filtered;
     }

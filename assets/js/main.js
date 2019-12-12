@@ -228,7 +228,7 @@ let getDateMonthList = (_lang = null) => {
 
 /**================================= views ================================= */
 
-var sortData = (_dataFiltered, _currentSort, _currentSortDir, _currentPage, _selected) => {
+let sortData = (_dataFiltered, _currentSort, _currentSortDir, _currentPage, _selected) => {
   return _dataFiltered
     .sort((a, b) => {
       let modifier = 1;
@@ -248,6 +248,56 @@ var sortData = (_dataFiltered, _currentSort, _currentSortDir, _currentPage, _sel
       let end = _currentPage * _selected;
       if (index >= start && index < end) return true;
     });
+};
+
+/**
+ *
+ * @param {*} _data
+ * @param {*} _obj
+ * @param {*} _selected
+ * @param {FILTER_CAT : "field_name", FILTER_STATUS : "field_name", FILTER_STW : "field_name", FILTER_DSTART : "field_name", FILTER_DEND : "field_name"} _fields
+ */
+var filterData = (_data, _obj, _selected, _fields = {}) => {
+  let filtered = _data;
+
+  if (_obj != undefined && _obj.type == FILTER_ROWPAGE) {
+    _selected = parseInt(_obj.val);
+  }
+  if (_obj != undefined && _obj.type == FILTER_STW && _obj.val != "") {
+    var filterByName = _obj.val.toLowerCase();
+
+    filtered = filtered.filter(function(data) {
+      return data[_fields.FILTER_STW].toLowerCase().indexOf(filterByName) == 0;
+    });
+  }
+  if (_obj != undefined && _obj.type == FILTER_CAT && _obj.val != 0) {
+    filtered = filtered.filter(function(data) {
+      return parseInt(data[_fields.FILTER_CAT]) === parseInt(_obj.val);
+    });
+  }
+  if (_obj != undefined && _obj.type == FILTER_STATUS && _obj.val != 0) {
+    filtered = filtered.filter(function(data) {
+      return parseInt(data[_fields.FILTER_STATUS]) === parseInt(_obj.val);
+    });
+  }
+  if (_obj != undefined && _obj.type == FILTER_DSTART && _obj.val != 0) {
+    filtered = filtered.filter(function(data) {
+      var dataBegin = new Date(data[_fields.FILTER_DSTART]).getMonth() + 1;
+
+      return dataBegin >= parseInt(_obj.val);
+    });
+  }
+  if (_obj != undefined && _obj.type == FILTER_DEND && _obj.val != 0) {
+    filtered = filtered.filter(function(data) {
+      var dataEnd = new Date(data[_fields.FILTER_DEND]).getMonth() + 1;
+
+      return dataEnd <= parseInt(_obj.val);
+    });
+  }
+
+  console.log(filtered, _selected);
+
+  return { filtered, _selected };
 };
 
 /**================================= end ================================= */

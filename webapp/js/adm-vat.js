@@ -178,22 +178,15 @@ new Vue({
       });
     },
     onFilterChange: function(_obj) {
-      let filtered = this.vatList;
-
       this.objFilter = _obj;
 
-      if (_obj != undefined && _obj.type == FILTER_ROWPAGE) {
-        this.selected = parseInt(_obj.val);
-      }
-      if (_obj != undefined && _obj.type == FILTER_STW && _obj.val != "") {
-        var filterByName = _obj.val.toLowerCase();
+      let dataFiltered = filterData(this.vatList, _obj, this.selected, {
+        FILTER_STW: "name"
+      });
 
-        filtered = filtered.filter(function(data) {
-          return data.name.toLowerCase().indexOf(filterByName) == 0;
-        });
-      }
-
+      let filtered = dataFiltered.filtered;
       this.onFilterLenght = filtered.length;
+      this.selected = dataFiltered._selected;
 
       return filtered;
     }

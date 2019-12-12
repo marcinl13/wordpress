@@ -104,32 +104,17 @@ window.onload = () => {
         this.currentListType = _type ? "grid" : "list";
       },
       onFilterChange: function(_obj) {
-        let filtered = this.products;
-
         this.objFilter = _obj;
 
-        if (_obj != undefined && _obj.type == FILTER_ROWPAGE) {
-          this.selected = parseInt(_obj.val);
-        }
-        if (_obj != undefined && _obj.type == FILTER_STW && _obj.val != "") {
-          var filterByName = _obj.val.toLowerCase();
+        let dataFiltered = filterData(this.products, _obj, this.selected, {
+          FILTER_STW: "nazwa",
+          FILTER_CAT: "id_kategori",
+          FILTER_STATUS: "id_statusu"
+        });
 
-          filtered = filtered.filter(function(data) {
-            return data.nazwa.toLowerCase().indexOf(filterByName) == 0;
-          });
-        }
-        if (_obj != undefined && _obj.type == FILTER_CAT && _obj.val != 0) {
-          filtered = filtered.filter(function(data) {
-            return parseInt(data.id_kategori) === parseInt(_obj.val);
-          });
-        }
-        if (_obj != undefined && _obj.type == FILTER_STATUS && _obj.val != 0) {
-          filtered = filtered.filter(function(data) {
-            return parseInt(data.id_statusu) === parseInt(_obj.val);
-          });
-        }
-
+        let filtered = dataFiltered.filtered;
         this.onFilterLenght = filtered.length;
+        this.selected = dataFiltered._selected;
 
         return filtered;
       }

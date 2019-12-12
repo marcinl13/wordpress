@@ -72,29 +72,16 @@ new Vue({
       this.redeemData();
     },
     onFilterChange: function(_obj) {
-      let filtered = this.docs;
-
       this.objFilter = _obj;
 
-      if (_obj != undefined && _obj.type == FILTER_ROWPAGE) {
-        this.selected = parseInt(_obj.val);
-      }
-      if (_obj != undefined && _obj.type == FILTER_DSTART && _obj.val != 0) {
-        filtered = filtered.filter(function(data) {
-          var dataBegin = new Date(data.dateCreate).getMonth() + 1;
+      let dataFiltered = filterData(this.docs, _obj, this.selected, {
+        FILTER_DSTART: "dateCreate",
+        FILTER_DEND: "dateEnd"
+      });
 
-          return dataBegin >= parseInt(_obj.val);
-        });
-      }
-      if (_obj != undefined && _obj.type == FILTER_DEND && _obj.val != 0) {
-        filtered = filtered.filter(function(data) {
-          var dataEnd = new Date(data.dateEnd).getMonth() + 1;
-
-          return dataEnd <= parseInt(_obj.val);
-        });
-      }
-
+      let filtered = dataFiltered.filtered;
       this.onFilterLenght = filtered.length;
+      this.selected = dataFiltered._selected;
 
       return filtered;
     },
