@@ -287,7 +287,7 @@ new Vue({
       </tbody>
       <tbody v-else>
         <tr>
-          <td class="text-center" colspan="8">{{phrases.NO_DATA}}</td>
+          <td class="text-center" colspan="10">{{phrases.NO_DATA}}</td>
         </tr>
       </tbody>
     </table>

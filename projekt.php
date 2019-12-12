@@ -6,7 +6,7 @@ Plugin URI: https://github.com/marcinl13/wordpress
 Description: ShopPlugin
 Author: Marcin Portykus
 Author URI: 
-Version: 1.0.18
+Version: 1.0.19
 */
 
 

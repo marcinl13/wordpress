@@ -1,7 +1,7 @@
 :root{
-  --order-completed-bg: green;
-  --order-inprogress-bg: red;
-  --order-deny-bg: orange;
+  --order-completed-bg: #28a746a5;
+  --order-inprogress-bg: #fff;
+  --order-deny-bg: #ffe11f98;
 }
 
 .o-cmpl-bg{

@@ -29,32 +29,23 @@ class mMagazine
 
   private function setTableName()
   {
-    $documents="";
-    $magazine="";
-    $products="";
-    $categories="";
+    $noUsed = "";
 
-    $this->dbConnection->getTableNames($products,  $categories, $taxes, $order, $transaction, $magazine, $documents, $user);
-    
-
-    $this->tableMagazine = $magazine;
-    $this->tableProducts = $products;
-    $this->tableCategory = $categories;
-    $this->tableOrders = $order;
+    $this->dbConnection->getTableNames($this->tableProducts,  $this->tableCategory, $noUsed, $this->tableOrders, $noUsed, $this->tableMagazine);
   }
 
   #region CRUD
 
   public function update(): bool
   {
-    $status = false; 
+    $status = false;
 
     return (bool) $status;
   }
 
   public function delete(): bool
   {
-    $status =  false; 
+    $status =  false;
 
     return (bool) $status;
   }
@@ -62,8 +53,9 @@ class mMagazine
   public function save(int &$insertID = 0): bool
   {
     $status = $this->dbConnection->insert(
-      "insert INTO {$this->tableMagazine}(docType,productID,quantity, groupId) VALUES ('{$this->docType}','{$this->productId}','{$this->quantity}','{$this->groupId}')"
-      , $insertID);
+      "insert INTO {$this->tableMagazine}(docType,productID,quantity, groupId) VALUES ('{$this->docType}','{$this->productId}','{$this->quantity}','{$this->groupId}')",
+      $insertID
+    );
 
     return (bool) $status;
   }
@@ -97,7 +89,8 @@ class mMagazine
   {
     $wz = IDocuments::WZ_ID;
 
-    $quantityProductGroup = $this->dbConnection->getResults("sELECT 
+    $quantityProductGroup = $this->dbConnection->getResults(
+      "sELECT 
           p.nazwa, 
           SUM(mg.quantity) as quantity, 
           MONTH(z.data_zamowienia) as m,
@@ -106,7 +99,8 @@ class mMagazine
         LEFT JOIN {$this->tableProducts} p  ON mg.productID = p.id
         LEFT JOIN {$this->tableOrders} z ON mg.groupId = z.id
         WHERE mg.docType = {$wz} and YEAR(z.data_zamowienia) = YEAR(CURDATE())
-        GROUP BY m,p.id,y", IDBDataFactor::ARRAY_A
+        GROUP BY m,p.id,y",
+      IDBDataFactor::ARRAY_A
     );
 
     // foreach ($quantityProductGroup as $key => $value) {
@@ -125,7 +119,7 @@ class mMagazine
       FROM {$this->tableOrders} 
       WHERE visible = 1 AND id_statusu =2 
       GROUP BY y,m 
-      ORDER BY YEAR(data_zamowienia) DESC", 
+      ORDER BY YEAR(data_zamowienia) DESC",
       IDBDataFactor::ARRAY_A
     );
 

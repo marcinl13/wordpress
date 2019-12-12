@@ -168,6 +168,7 @@ class AdminKokpitMenu
 
     CustomHooks::AddHookLanguage('ADMIN_STATYSTIC');
 
+    echo "<div>";
     $draw1 = new Statystic();
     $draw1->drawChart01();
     $draw1->drawChart02();
@@ -341,8 +342,8 @@ class AdminKokpitMenu
     $p = new mDocuments2();
     $p = $p->getAll();
     trace($p);
+  }
 
-   }
 
   public function PluginUpdate()
   {

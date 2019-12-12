@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace DB;
 
@@ -21,10 +21,10 @@ class DBConnection implements IDBDataFactor, ITableNames
 
   public function getResults(string $query, string $IDBFactor): array
   {
-    return $this->db->get_results( $this->db->prepare($query, ""), $IDBFactor );
+    return $this->db->get_results($this->db->prepare($query, ""), $IDBFactor);
   }
 
-  public function insert(string $query, int &$insertedID=0): bool
+  public function insert(string $query, int &$insertedID = 0): bool
   {
     $isInserted = $this->db->query($query);
 
@@ -48,22 +48,30 @@ class DBConnection implements IDBDataFactor, ITableNames
     return self::getWPPrefix() . PROJECT_PREFIX;
   }
 
-  public function getTableNames( &$productsTable=null,  &$categoriesTable=null, &$taxesTable=null, 
-      &$orderTable=null, &$transactionTable=null, &$magazineTable=null, &$documentsTable=null, &$userTable=null, &$invoicesTable=null ){
+  public function getTableNames(
+    &$productsTable = null,
+    &$categoriesTable = null,
+    &$taxesTable = null,
+    &$orderTable = null,
+    &$transactionTable = null,
+    &$magazineTable = null,
+    &$documentsTable = null,
+    &$userTable = null,
+    &$invoicesTable = null
+  ) {
 
     $shopPrefix = self::getShopPrefix();
     $wpPrefix = self::getWPPrefix();
 
-    $productsTable = $productsTable===null ? "": $shopPrefix . ITableNames::Products;
-    $categoriesTable = $categoriesTable===null ? "": $shopPrefix . ITableNames::Category;
-    $taxesTable = $taxesTable===null ? "": $shopPrefix . ITableNames::Vat;
-    $orderTable = $orderTable===null ? "": $shopPrefix . ITableNames::Orders;
-    $transactionTable = $transactionTable===null ? "": $shopPrefix . ITableNames::Transactions;
-    $magazineTable = $magazineTable===null ? "": $shopPrefix . ITableNames::Magazine18;
-    $documentsTable = $documentsTable===null ? "": $shopPrefix . ITableNames::Documents18;
-    $userTable = $userTable===null ? "": $wpPrefix . ITableNames::Users;
+    $productsTable = $shopPrefix . ITableNames::Products;
+    $categoriesTable = $shopPrefix . ITableNames::Category;
+    $taxesTable = $shopPrefix . ITableNames::Vat;
+    $orderTable = $shopPrefix . ITableNames::Orders;
+    $transactionTable = $shopPrefix . ITableNames::Transactions;
+    $magazineTable = $shopPrefix . ITableNames::Magazine18;
+    $documentsTable = $shopPrefix . ITableNames::Documents18;
+    $userTable =  $wpPrefix . ITableNames::Users;
 
-    $invoicesTable = $invoicesTable===null ? "": $wpPrefix . ITableNames::Invoices;
+    $invoicesTable = $invoicesTable === null ? "" : $wpPrefix . ITableNames::Invoices;
   }
-
 }
