@@ -1,6 +1,7 @@
 export default Vue.component("component-dump", {
   data: function() {
     return {
+      tableID: "",
       productsList: [{}],
       phrases: langSettings[0],
       phrasesFilter: langSettingsFilter[0],
@@ -11,6 +12,8 @@ export default Vue.component("component-dump", {
     };
   },
   created: function() {
+    this.tableID = uniqID();
+
     try {
       var parsed = JSON.parse(localStorage.getItem(LSI));
 
@@ -133,7 +136,7 @@ export default Vue.component("component-dump", {
   template: `
   <div>
     <div class="d-block w-100 px-3 mb-3">
-      <table class="table table-striped table-sm table-hover">
+      <table :id=tableID class="table table-striped table-sm table-hover">
         <thead class="table-primary">
           <th class="text-center">{{phrases.LP}}</th>
           <th class="text-center">{{phrases.NAME}}</th>
@@ -156,7 +159,7 @@ export default Vue.component("component-dump", {
 
         <tbody class="table-light" v-else>
           <tr>
-            <td class="text-center align-middle" colspan="5">{{phrases.NO_DATA}}</td>         
+            <td class="text-center align-middle" :colspan="5">{{phrases.NO_DATA}}</td>         
           </tr>
         </tbody>
 

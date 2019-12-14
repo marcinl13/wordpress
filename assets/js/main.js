@@ -257,7 +257,7 @@ let sortData = (_dataFiltered, _currentSort, _currentSortDir, _currentPage, _sel
  * @param {*} _selected
  * @param {FILTER_CAT : "field_name", FILTER_STATUS : "field_name", FILTER_STW : "field_name", FILTER_DSTART : "field_name", FILTER_DEND : "field_name"} _fields
  */
-var filterData = (_data, _obj, _selected, _fields = {}) => {
+let filterData = (_data, _obj, _selected, _fields = {}) => {
   let filtered = _data;
 
   if (_obj != undefined && _obj.type == FILTER_ROWPAGE) {
@@ -296,6 +296,38 @@ var filterData = (_data, _obj, _selected, _fields = {}) => {
   }
 
   return { filtered, _selected };
+};
+
+let uniqID = () => {
+  return (
+    "_" +
+    Math.random()
+      .toString(36)
+      .substr(2, 9)
+  );
+};
+
+let controlTableSize = _tableID => {
+  return _tableID != null ? document.getElementById(_tableID).tHead.childElementCount : 1;
+};
+
+let validURL = _url => {
+  let pattern = new RegExp(
+    "^(https?:\\/\\/)?" + // protocol
+    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+    "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+    "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+    "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  ); // fragment locator
+  return !!pattern.test(_url);
+};
+
+let previewImage = _image => {
+  return validURL(_image)
+    ? _image
+    : "https://childrensmattressesonline.co.uk/i/others/empty-product-large.png?v=5c3fc1a0";
 };
 
 /**================================= end ================================= */

@@ -3,6 +3,7 @@ import optionBar from "../components/filters/optionBar.js";
 new Vue({
   el: "#adm-docs",
   data: {
+    tableID: "",
     phrases: langSettings[0],
     phrasesFilter: langSettingsFilter[0],
     docs: [],
@@ -22,6 +23,8 @@ new Vue({
     }
   },
   created: function() {
+    this.tableID = uniqID();
+    
     this.redeemData();
   },
   methods: {
@@ -135,7 +138,7 @@ new Vue({
       :filterProps=onFilterChange
     />
 
-    <table class="table table-striped table-hover table-sm ">
+    <table :id=tableID class="table table-striped table-hover table-sm ">
       <thead class="table-primary">
         <th class="text-center">{{phrases.LP}}</th>
         <th @click="sort('docType')" class="text-center poiter">{{phrases.NAME}}</th>
@@ -172,7 +175,7 @@ new Vue({
       </tbody>
       <tfoot v-else>
         <tr class="text-center" >
-          <td colspan="5">{{phrases.NO_DATA}}</td>
+          <td :colspan=controlTableSize(tableID)>{{phrases.NO_DATA}}</td>
         </tr>
       </tfoot>
     </table>

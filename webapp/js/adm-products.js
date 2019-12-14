@@ -3,6 +3,7 @@ import optionBar from "../components/filters/optionBar.js";
 new Vue({
   el: "#adm-products",
   data: {
+    tableID: "",
     phrases: langSettings[0],
     phrasesFilter: langSettingsFilter[0],
     products: [],
@@ -29,6 +30,8 @@ new Vue({
     }
   },
   created: function() {
+    this.tableID = uniqID();
+
     this.redeemData();
   },
   methods: {
@@ -367,7 +370,7 @@ new Vue({
       :onAddNew=createProduct 
     /> 
 
-    <table id="products" class="table table-striped table-hover table-sm ">
+    <table :id=tableID class="table table-striped table-hover table-sm ">
       <thead class="table-primary">
         <th class="text-center">{{phrases.LP}}</th>
         <th @click="onSortClick('nazwa')" class="text-center poiter">{{phrases.NAME}}</th>
@@ -401,7 +404,7 @@ new Vue({
       </tbody>
       <tfoot v-else>
         <tr class="text-center" >
-          <td :colspan="6">{{phrases.NO_DATA}}</td>
+          <td :colspan=controlTableSize(tableID)>{{phrases.NO_DATA}}</td>
         </tr>
       </tfoot>
     </table>

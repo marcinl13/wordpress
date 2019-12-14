@@ -3,6 +3,7 @@ import optionBar from "../components/filters/optionBar.js";
 new Vue({
   el: "#usr-orders",
   data: {
+    tableID: "",
     phrases: langSettings[0],
     phrasesFilter: langSettingsFilter[0],
     orders: [],
@@ -25,6 +26,8 @@ new Vue({
     }
   },
   created: function() {
+    this.tableID = uniqID();
+
     document.getElementsByTagName("article")[0].children[0].remove();
     document.getElementsByTagName("article")[0].children[0].removeAttribute("class");
 
@@ -139,7 +142,7 @@ new Vue({
       :filterProps=onFilterChange
     /> 
 
-    <table class="zamowienia table table-striped table-hover table-sm ">
+    <table :id=tableID class="zamowienia table table-striped table-hover table-sm ">
       <thead class="table-primary" >
         <th class="text-center col-sm-1" style="width: 8%;">{{phrases.LP}}</th>
         <th class="text-center poiter" v-on:click="sort('data_zamowienia')">{{phrases.DATE_BEGIN}}</th>
@@ -191,7 +194,7 @@ new Vue({
       </tbody>
       <tbody v-else>
         <tr>
-          <td class="text-center" colspan="9">{{phrases.NO_DATA}}</td>
+          <td class="text-center" :colspan=controlTableSize(tableID)>{{phrases.NO_DATA}}</td>
         </tr>
       </tbody>
     </table>

@@ -10,22 +10,8 @@ export default Vue.component("productListGrid", {
     dodajDoKoszyka: function(_id) {
       this.AddNewOrder(_id);
     },
-    validURL: function(str) {
-      var pattern = new RegExp(
-        "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-          "(\\#[-a-z\\d_]*)?$",
-        "i"
-      ); // fragment locator
-      return !!pattern.test(str);
-    },
     imagePreview: function(_image) {
-      return this.validURL(_image)
-        ? _image
-        : "https://childrensmattressesonline.co.uk/i/others/empty-product-large.png?v=5c3fc1a0";
+      return previewImage(_image);
     }
   },
   template: `
