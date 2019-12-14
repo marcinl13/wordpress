@@ -144,7 +144,7 @@ new Vue({
         FILTER_CAT: "id_kategori",
         FILTER_STATUS: "id_statusu",
         FILTER_DSTART: "data_zamowienia",
-        FILTER_DEND: "data_realizacji"
+        FILTER_DEND: "data_zamowienia"
       });
 
       let filtered = dataFiltered.filtered;
@@ -201,7 +201,7 @@ new Vue({
           <td class="text-center" style="vertical-align: middle !important;">{{dateFormating(zamowienie.data_realizacji)}}</td>
           <td class="text-center" style="vertical-align: middle !important;">
             {{status[zamowienie.id_statusu]}}<br/>          
-            <select class="form-control" v-if="zamowienie.id_statusu!=2" 
+            <select class="form-control" v-if="zamowienie.id_statusu==1" 
               id="selectStatus" v-on:change="onChangeStatus($event.target, zamowienie.id)">
                 <option value="0">{{phrasesFilter.CHANGE_STATUS}}</option>
                 <option value="1" v-if="zamowienie.id_statusu!=1" >{{status[1]}}</option>

@@ -16,6 +16,13 @@
   background-color: var(--order-deny-bg) !important;
 }
 
+.o-cmpl-bg:hover, .o-inpg-bg:hover, .o-deny-bg:hover{
+  /* opacity: .6; */
+  background-color:rgba(0,0,0, 0.1) !important;
+}
+
+
+
 /*colors*/
 .green {
   color: green !important;
