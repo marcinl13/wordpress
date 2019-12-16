@@ -20,7 +20,6 @@ new Vue({
       return args.hasOwnProperty(_tabName) ? args[_tabName] : _tabName;
     },
     refreshPage: function(_tabName) {
-      
       if (_tabName == "Settings") {
         location.reload(true);
       }
@@ -51,7 +50,7 @@ new Vue({
         class="tab"
       ></component>
 
-      <button type="submit" class="d-block my-2 mx-auto btn btn-success" v-on:click="refreshPage(currentTab)">{{langSettingsFilter.SAVE}}</button>
+      <button type="submit" class="d-block my-2 mx-auto btn btn-success" v-on:click="refreshPage(currentTab)">{{langSettingsFilter.SAVE}} {{replaceTabs(currentTab)}}</button>
      </form> 
   </div>`
 });
