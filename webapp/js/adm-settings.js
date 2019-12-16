@@ -37,20 +37,27 @@ new Vue({
   },
   template: `
   <div class="d-block w-100 px-3 mt-3">
+    <div>
+      <a class="btn btn-primary btn-small" href="page=settings&action=import">import</a>
+    </div>
+
     <button
       v-for="tab in tabs"
       v-bind:key="tab"
       v-bind:class="['tab-button', { active: currentTab === tab }]"
       v-on:click="currentTab = tab"
     >{{ replaceTabs(tab) }}</button>
-
+    
     <form method="post" :action="['?page=settings&action=save' + currentTab]">
       <component
         v-bind:is="currentTabComponent"
         class="tab"
       ></component>
 
-      <button type="submit" class="d-block my-2 mx-auto btn btn-success" v-on:click="refreshPage(currentTab)">{{langSettingsFilter.SAVE}} {{replaceTabs(currentTab)}}</button>
-     </form> 
+      <button type="submit" class="d-block my-2 mx-auto btn btn-success" v-on:click="refreshPage(currentTab)">
+        {{langSettingsFilter.SAVE}} {{replaceTabs(currentTab)}}
+      </button>
+     
+      </form> 
   </div>`
 });

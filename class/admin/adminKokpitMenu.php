@@ -219,6 +219,27 @@ class AdminKokpitMenu
     $src->inputMe('adm-vat');
   }
 
+  public static function wpse_287406_export_csv()
+  {
+    echo 'sasa';
+    die();
+
+    $file =  CONFIGS . 'config.conf';
+
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename=file.csv');
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($file));
+
+    readfile($file);
+
+    exit;
+  }
+
   public function optionSettings()
   {
     $configData =  fileRW::readJsonAssoc(self::$configFile);
@@ -269,13 +290,49 @@ class AdminKokpitMenu
         fileRW::writeJson(self::$configFile, $configData);
       }
     }
+    if (isset($_REQUEST['action']) && $_REQUEST['action'] == "import") {
+      echo
+        '<form action="?page=settings&action=import" method="post" enctype="multipart/form-data">
+          Select image to upload:
+          <input type="file" name="fileToUpload" id="fileToUpload">
+          <input type="submit" value="Upload" name="submit">
+        </form>';
+
+      trace($_FILES);
+
+      $allowExt = array('json', 'application/octet-stream');
+      $fileInfo = $_FILES['fileToUpload'];
+      $fileName = $fileInfo['name'];
+      $fileTo = CONFIGS . 'config.conf';
+
+      trace(in_array($fileInfo['type'], $allowExt));
+
+      if (!file_exists($fileTo) && $fileInfo['type'] == 'application/octet-stream') {
+        file_put_contents($fileTo, file_get_contents($fileInfo['tmp_name']));
+
+        echo "<h3>File uploaded</h3>";
+      }
+
+      echo '<div><a class="btn btn-primary btn-small" href="?page=settings">Back</a></div>';
+    }
+    if (isset($_REQUEST['action']) && $_REQUEST['action'] == "export") {
+      
+      add_filter('handle_bulk_actions-edit-post', array(__CLASS__, 'wpse_287406_export_csv'));
+      // do_action('handle_bulk_actions-edit-pos');
+
+      // header('Content-disposition: attachment; filename="'.basename('config.conf').'"');
+      // echo readfile($confifFile);
+      echo "<div><a class=\"btn btn-danger btn-small\" href=\"{$confifFile}\">Export</a><div>";
+    }
 
     CustomHooks::AddHookSettings();
 
     CustomHooks::AddHookLanguage("ADMIN_PANEL_SETTINGS");
 
-    $src = new fillHTML();
-    $src->inputMe('adm-settings');
+    if ($_REQUEST['action'] != "import") {
+      $src = new fillHTML();
+      $src->inputMe('adm-settings');
+    }
   }
 
   public function optionOrders()
