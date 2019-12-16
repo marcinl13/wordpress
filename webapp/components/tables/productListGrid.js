@@ -21,8 +21,8 @@ export default Vue.component("productListGrid", {
 
       <div class="card grid-list" v-if="dataSize>0" v-for="(product, i) in productsData">
 
-        <p style="font-size: 1.5rem;">{{product.nazwa}}</p>
-        <img class="small-img" :src=imagePreview(product.zdjecie) />
+        <p style="font-size: 1.5rem;">{{product.name}}</p>
+        <img class="small-img" :src=imagePreview(product.image) />
         <p>{{languageSettings.CATEGORY}}: {{product.nazwa_kategori}}</p>
 
         <div>

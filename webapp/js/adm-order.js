@@ -8,7 +8,7 @@ new Vue({
     phrasesFilter: langSettingsFilter[0],
     orders: [],
     category: [],
-    currentSort: "data_zamowienia",
+    currentSort: "dateOrder",
     currentSortDir: "desc",
     currentPage: 1,
     status: statuses[0] || [, ,],
@@ -104,12 +104,11 @@ new Vue({
     },
     onChangeStatus: function(_target, _id) {
       var selectValue = _target.value;
-
       if (selectValue == 0) return;
 
       Swal.fire({
         title: "",
-        text: this.phrasesFilter.ASK_STATUS + status[selectValue] + " ?",
+        text: this.phrasesFilter.ASK_STATUS + this.status[selectValue] + " ?",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -121,7 +120,7 @@ new Vue({
           var posted = serverPost(settings.apiUrl + "orders", {
             token: token.jwt,
             id: _id,
-            id_statusu: selectValue
+            statusID: selectValue
           });
 
           if (posted.status == 200 || posted.status == 201) {
@@ -141,10 +140,10 @@ new Vue({
 
       let dataFiltered = filterData(this.orders, _obj, this.selected, {
         FILTER_STW: "user",
-        FILTER_CAT: "id_kategori",
-        FILTER_STATUS: "id_statusu",
-        FILTER_DSTART: "data_zamowienia",
-        FILTER_DEND: "data_zamowienia"
+        FILTER_CAT: "categoryID",
+        FILTER_STATUS: "statusID",
+        FILTER_DSTART: "dateOrder",
+        FILTER_DEND: "dateOrder"
       });
 
       let filtered = dataFiltered.filtered;
@@ -180,9 +179,9 @@ new Vue({
       <thead class="table-primary" >
         <th class="text-center col-sm-1" style="width: 8%;">{{phrases.LP}}</th>
         <th class="text-center poiter" v-on:click="sort('user')" >{{phrases.USER}}</th>
-        <th class="text-center poiter" v-on:click="sort('data_zamowienia')">{{phrases.DATE_BEGIN}}</th>
-        <th class="text-center poiter" v-on:click="sort('data_realizacji')">{{phrases.DATE_END}}</th>
-        <th class="text-center poiter" v-on:click="sort('id_statusu')">{{phrases.STATUS}}</th>
+        <th class="text-center poiter" v-on:click="sort('dateOrder')">{{phrases.DATE_BEGIN}}</th>
+        <th class="text-center poiter" v-on:click="sort('dateRealization')">{{phrases.DATE_END}}</th>
+        <th class="text-center poiter" v-on:click="sort('statusID')">{{phrases.STATUS}}</th>
         <th class="text-center poiter" v-on:click="sort('completed')">{{phrases.PAYED}}</th>
         <th class="text-center poiter" v-on:click="sort('price')">{{phrases.PRICE}}</th>
         <th class="text-center poiter" v-on:click="sort('priceTransport')">{{phrases.TRANSPORT_PRICE}}</th>
@@ -191,22 +190,22 @@ new Vue({
       </thead>
       <tbody v-if="onFilterLenght>0">
         <tr v-for="(zamowienie,count) in orderSorted" :class="{ 
-          'o-inpg-bg': zamowienie.id_statusu == 1 , 
-          'o-cmpl-bg': zamowienie.id_statusu == 2,
-          'o-deny-bg': zamowienie.id_statusu == 3}">
+          'o-inpg-bg': zamowienie.statusID == 1 , 
+          'o-cmpl-bg': zamowienie.statusID == 2,
+          'o-deny-bg': zamowienie.statusID == 3}">
           
           <td class="text-center" style="vertical-align: middle !important;">{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
           <td class="text-center" style="vertical-align: middle !important;">{{zamowienie.user}}</td>
-          <td class="text-center" style="vertical-align: middle !important;">{{dateFormating(zamowienie.data_zamowienia)}}</td>
-          <td class="text-center" style="vertical-align: middle !important;">{{dateFormating(zamowienie.data_realizacji)}}</td>
+          <td class="text-center" style="vertical-align: middle !important;">{{dateFormating(zamowienie.dateOrder)}}</td>
+          <td class="text-center" style="vertical-align: middle !important;">{{dateFormating(zamowienie.dateRealization)}}</td>
           <td class="text-center" style="vertical-align: middle !important;">
-            {{status[zamowienie.id_statusu]}}<br/>          
-            <select class="form-control" v-if="zamowienie.id_statusu==1" 
+            {{status[zamowienie.statusID]}}<br/>          
+            <select class="form-control" v-if="zamowienie.statusID==1" 
               id="selectStatus" v-on:change="onChangeStatus($event.target, zamowienie.id)">
                 <option value="0">{{phrasesFilter.CHANGE_STATUS}}</option>
-                <option value="1" v-if="zamowienie.id_statusu!=1" >{{status[1]}}</option>
-                <option value="2" v-if="zamowienie.id_statusu!=2">{{status[2]}}</option>
-                <option value="3" v-if="zamowienie.id_statusu!=3">{{status[3]}}</option>
+                <option value="1" v-if="zamowienie.statusID!=1" >{{status[1]}}</option>
+                <option value="2" v-if="zamowienie.statusID!=2">{{status[2]}}</option>
+                <option value="3" v-if="zamowienie.statusID!=3">{{status[3]}}</option>
             </select>          
           </td>
           <td class="text-center" style="vertical-align: middle !important;">
@@ -226,7 +225,7 @@ new Vue({
                   <span class="popuptext" id="myPopup">{{phrasesFilter.SHOW_DETAILS}}</span>
               </div>
           
-              <div class="popup" v-if="zamowienie.id_statusu==2" 
+              <div class="popup" v-if="zamowienie.statusID==2" 
                 onMouseEnter="this.children[1].classList.toggle('show')" 
                 onMouseLeave="this.children[1].classList.toggle('show')">
                   <a class="bg-white btn btn-small btn-outline-primary fa fa-file-pdf-o red"

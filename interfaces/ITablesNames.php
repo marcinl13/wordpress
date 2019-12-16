@@ -4,14 +4,12 @@ namespace TableDB;
 
 interface ITableNames
 {
-  const Products = 'produkty';
-  const Orders = 'zamowienia';
-  const Category = 'kategorie';
+  const Products = 'products';
+  const Orders = 'orders';
+  const Category = 'categories';
   const Status = 'zamowienia_statusy';
   const Transactions = 'transactions';
-  const Vat = 'vat';
-  // const Documents = 'documents17';
-  // const Magazine = 'mag17';
+  const Vat = 'tax_rates';
 
   //v18
   const Documents18 = 'documents';

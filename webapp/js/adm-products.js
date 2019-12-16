@@ -77,22 +77,8 @@ new Vue({
       }
       return false;
     },
-    validURL: function(str) {
-      var pattern = new RegExp(
-        "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-          "(\\#[-a-z\\d_]*)?$",
-        "i"
-      ); // fragment locator
-      return !!pattern.test(str);
-    },
     imagePreview: function(_image) {
-      return this.validURL(_image)
-        ? _image
-        : "https://childrensmattressesonline.co.uk/i/others/empty-product-large.png?v=5c3fc1a0";
+      return previewImage(_image)
     },
     createProduct: function() {
       this.editProduct();
@@ -121,14 +107,14 @@ new Vue({
         var filtered = this.products.filter(data => data.id == _id)[0];
         defaultTitle = this.phrases.EDIT_PRODUCT;
         defaultID = filtered.id;
-        defaultName = filtered.nazwa;
-        defaultCategory = filtered.id_kategori;
+        defaultName = filtered.name;
+        defaultCategory = filtered.categoryID;
         defaultNetto = filtered.netto;
-        defaultVat = filtered.id_stawki;
+        defaultVat = filtered.taxRateID;
         defaultBrutto = filtered.brutto;
-        defaultDetails = filtered.opis || "";
-        defaultImage = filtered.zdjecie || "";
-        defaultUnit = filtered.jm || "szt";
+        defaultDetails = filtered.description || "";
+        defaultImage = filtered.image || "";
+        defaultUnit = filtered.unit || "szt";
         defaultQuantity = filtered.quantity || 0;
       }
 
@@ -144,9 +130,9 @@ new Vue({
 
       this.categories.forEach(element => {
         if (element.id == defaultCategory) {
-          categoryOptions += `<option value="${element.id}" selected="">${element.nazwa}</option>`;
+          categoryOptions += `<option value="${element.id}" selected="">${element.name}</option>`;
         } else {
-          categoryOptions += `<option value="${element.id}">${element.nazwa}</option>`;
+          categoryOptions += `<option value="${element.id}">${element.name}</option>`;
         }
       });
 
@@ -178,9 +164,9 @@ new Vue({
           <div class="form-group row mb-0">
             <label for="priceN" class="col-sm-4 col-form-label col-form-label-sm">${this.phrases.PRICE} Netto</label>
             <input class="form-control" size="5" id="priceN" 
-              value="${defaultNetto}" type='text' oninput="policzBrutto(this,'${stawki}')"></input>
+              value="${defaultNetto}" type='text' oninput="calculateBrutto(this,'${stawki}')"></input>
             <label for="priceB" class="col-sm-2 col-form-label col-form-label-sm">zł</label>
-            <select id="priceS" class="form-control mb-0" onchange="policzBrutto(this,'${stawki}')">
+            <select id="priceS" class="form-control mb-0" onchange="calculateBrutto(this,'${stawki}')">
               ${vatOptions}
             </select>       
           </div>
@@ -239,7 +225,7 @@ new Vue({
           var edited = serverPost(settings.apiUrl + "products", {
             token: token.jwt,
             id: defaultID,
-            nazwa: name,
+            name: name,
             id_stawki: priceS,
             id_kategori: category,
             netto: priceN.toFixed(2),
@@ -292,9 +278,9 @@ new Vue({
       this.objFilter = _obj;
 
       let dataFiltered = filterData(this.products, _obj, this.selected, {
-        FILTER_STW: "nazwa",
-        FILTER_CAT: "id_kategori",
-        FILTER_STATUS: "id_statusu"
+        FILTER_STW: "name",
+        FILTER_CAT: "categoryID",
+        FILTER_STATUS: "statusID"
       });
 
       let filtered = dataFiltered.filtered;
@@ -373,8 +359,8 @@ new Vue({
     <table :id=tableID class="table table-striped table-hover table-sm ">
       <thead class="table-primary">
         <th class="text-center">{{phrases.LP}}</th>
-        <th @click="onSortClick('nazwa')" class="text-center poiter">{{phrases.NAME}}</th>
-        <th @click="onSortClick('id_kategori')" class="text-center poiter">{{phrases.CATEGORY}}</th>
+        <th @click="onSortClick('name')" class="text-center poiter">{{phrases.NAME}}</th>
+        <th @click="onSortClick('categoryID')" class="text-center poiter">{{phrases.CATEGORY}}</th>
         <th @click="onSortClick('quantity')" class="text-center poiter">{{phrases.QUANTITY}}</th>
         <th @click="onSortClick('price')" class="text-center poiter">{{phrases.PRICE}}</th>
         <th class="text-center">{{phrases.PHOTO}}</th>
@@ -383,7 +369,7 @@ new Vue({
       <tbody class="table-light" v-if="onFilterLenght>0">
         <tr v-for="(product, i) in productsSorted">
           <td class="text-center">{{ ((-1 + currentPage) * selected) +( i+1)}}</td>
-          <td class="text-center">{{product.nazwa}}</td>
+          <td class="text-center">{{product.name}}</td>
           <td class="text-center">{{product.nazwa_kategori}}</td>
           <td class="text-center">{{product.quantity}}</td>
           <td class="text-center">{{product.price}} zł</td>
@@ -391,7 +377,7 @@ new Vue({
             <a class="thumbnail" href="#">
               <p>{{phrasesFilter.IMAGE_PREVIEW}}</p>
               <span>
-                <img class="small-img" :src=imagePreview(product.zdjecie) />              
+                <img class="small-img" :src=imagePreview(product.image) />              
               </span>
             </a>          
           </td>

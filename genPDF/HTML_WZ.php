@@ -26,7 +26,7 @@ class HTML_WZ extends PrefabPDF implements IPDF
     $prefab = new PrefabPDF();
 
     $text = '';
-    $text .= $prefab->prepareDates((string) $res['data_zamowienia'], (string) $res['dateEnd']);
+    $text .= $prefab->prepareDates((string) $res['dateCreate'], (string) $res['dateEnd']);
     $text .= $prefab->prepareTitle($res);
     $text .= "<br><div style='heigth:50px; width:100%; margin:10px 0px;'>&nbsp;</div>";
     $text .=  "<br><center>" . self::tableSection($res) . "</center>";
@@ -38,7 +38,7 @@ class HTML_WZ extends PrefabPDF implements IPDF
 
   public function tableSection($res)
   {
-    $args = json_decode(base64_decode($res['produkty']), true);
+    $args = json_decode(base64_decode($res['products']), true);
     $args = DataRefactor::refactorToWZTable($args);
 
 

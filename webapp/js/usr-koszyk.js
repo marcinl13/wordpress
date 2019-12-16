@@ -1,4 +1,4 @@
-import dump from "../components/tables/dump.js";
+import dump from "../components/tables/dump.1.js";
 
 new Vue({
   el: "#usr-koszyk",

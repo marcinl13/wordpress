@@ -231,7 +231,7 @@ class mProduct
   public function getLastAddedProducts(int $amount = 5): array
   {
     $lastAddedProducts = $this->dbConnection->getResults(
-      "sELECT nazwa as name 
+      "sELECT name as name 
         FROM {$this->tableProducts} 
         ORDER BY id DESC 
         LIMIT {$amount}"
@@ -243,10 +243,10 @@ class mProduct
   public function getAll(): array
   {
     $args = $this->dbConnection->getResults(
-      "select p.*, k.nazwa as nazwa_kategori, ROUND(p.netto *(1+ sv.stawka),2) as price
+      "select p.*, k.name as nazwa_kategori, ROUND(p.netto *(1+ sv.taxRate),2) as price
       from {$this->tableProducts} p
-      INNER JOIN {$this->tableVat} sv ON p.id_stawki = sv.id
-      LEFT JOIN {$this->tableCategory} k ON p.id_kategori = k.id
+      INNER JOIN {$this->tableVat} sv ON p.taxRateID = sv.id
+      LEFT JOIN {$this->tableCategory} k ON p.categoryID = k.id
       where p.visible = 1
       ORDER by p.id asc",
       IDBDataFactor::ARRAY_A
@@ -257,10 +257,10 @@ class mProduct
   public function getOne(): array
   {
     $args =$this->dbConnection->getResults(
-      "select p.*, k.nazwa as nazwa_kategori, ROUND(p.netto *(1+ sv.stawka),2) as price 
+      "select p.*, k.name as nazwa_kategori, ROUND(p.netto *(1+ sv.taxRate),2) as price 
       from {$this->tableProducts} p 
-      left join {$this->tableCategory} k ON p.id_kategori = k.id
-      INNER JOIN {$this->tableVat} sv ON p.id_stawki = sv.id
+      left join {$this->tableCategory} k ON p.categoryID = k.id
+      INNER JOIN {$this->tableVat} sv ON p.taxRateID = sv.id
       where p.id = {$this->id} and p.visible = 1
       ORDER by p.id asc"
       ,IDBDataFactor::ARRAY_A
@@ -272,10 +272,10 @@ class mProduct
   public function getMany(): array
   {
     $args = $this->dbConnection->getResults(
-      "select p.*, k.nazwa as nazwa_kategori, ROUND(p.netto *(1+ sv.stawka),2) as price 
+      "select p.*, k.name as nazwa_kategori, ROUND(p.netto *(1+ sv.taxRate),2) as price 
       from {$this->tableProducts} p 
-      left join {$this->tableCategory} k ON p.id_kategori = k.id
-      INNER JOIN {$this->tableVat} sv ON p.id_stawki = sv.id
+      left join {$this->tableCategory} k ON p.categoryID = k.id
+      INNER JOIN {$this->tableVat} sv ON p.taxRateID = sv.id
       where p.id IN({$this->ids}) and p.visible = 1
       ORDER by p.id asc"
       ,IDBDataFactor::ARRAY_A
@@ -297,9 +297,9 @@ class mProduct
     $image = self::getImage();
 
     $status = $this->dbConnection->query("update {$this->tableProducts} SET 
-      nazwa='{$name}', id_stawki='{$taxRate}', id_kategori='{$categoryId}', 
-      netto='{$netto}', brutto='{$brutto}', zdjecie='{$image}', 
-      opis='{$desc}', jm='{$unit}' 
+      name='{$name}', taxRateID='{$taxRate}', categoryID='{$categoryId}', 
+      netto='{$netto}', brutto='{$brutto}', image='{$image}', 
+      details='{$desc}', unit='{$unit}' 
       WHERE id={$id}");
 
     return (bool) $status;
@@ -315,7 +315,7 @@ class mProduct
   public function save(int &$insertID = 0, $addToMag = false): bool
   {
     $status = $this->dbConnection->insert(
-      "insert INTO {$this->tableProducts} (nazwa, id_stawki, id_kategori, jm, netto, brutto, zdjecie, opis)
+      "insert INTO {$this->tableProducts} (name, taxRateID, categoryID, unit, netto, brutto, image, details)
         VALUES ('{$this->name}', '{$this->vatID}', '{$this->categoryId}', '{$this->jm}', '{$this->netto}', 
           '{$this->brutto}', '{$this->image}', '{$this->description}')"
       , $insertID);

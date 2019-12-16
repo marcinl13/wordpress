@@ -85,7 +85,7 @@ class mCategory
     $name = self::getName();
     $id= self::getID();
 
-    $status = $this->dbConnection->query("update {$this->tableCat} SET nazwa='{$name}' WHERE id='{$id}'");
+    $status = $this->dbConnection->query("update {$this->tableCat} SET name='{$name}' WHERE id='{$id}'");
 
     return (bool) $status;
   }
@@ -100,7 +100,7 @@ class mCategory
   public function save(int &$insertID = 0): bool
   {
     $status = $this->dbConnection->insert(
-      "insert INTO {$this->tableCat}(nazwa) VALUES ('{$this->name}')",
+      "insert INTO {$this->tableCat}(name) VALUES ('{$this->name}')",
       $insertID
     );
 

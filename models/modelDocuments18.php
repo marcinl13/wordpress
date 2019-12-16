@@ -98,7 +98,7 @@ class mDocuments2
   public function save(int &$insertID = 0): bool
   {
     $status = $this->dbConnection->insert(
-      "insert INTO {$this->tableDocuments}(docType,orderId,num,day,month,year,dateCreate,dateEnd) 
+      "insert INTO {$this->tableDocuments}(docType,orderID,num,day,month,year,dateCreate,dateEnd) 
         VALUES ('{$this->docType}','{$this->groupId}','{$this->num}','{$this->day}','{$this->month}','{$this->year}',
           '{$this->dataCreate}','{$this->dataRealization}')",
       $insertID

@@ -144,7 +144,7 @@
     "YES": "Tak",
     "NO": "Nie",
     "ASK_DELETE": "Czy napewno chcesz usunąć ten element?",
-    "ASK_STATUS": "Czy napewno chcesz zmienić status na",
+    "ASK_STATUS": "Czy napewno chcesz zmienić status na ",
     "FILL_FIELDS": "Uzupełnij wszystkie pola",
     "CHANGE_STATUS": "Zmienić status na",
     "CHOOSE_STATUS": "Wybierz status",

@@ -31,7 +31,7 @@ export default Vue.component("searchWithCategory", {
   <div class="input-group-append">
     <select class="form-control" name="category" id="category" v-on:change="chooseCategory($event.target.value);">
       <option value="0">{{languageSettings.ALL}}</option>
-      <option v-for="cat in categories" :value=cat.id>{{cat.nazwa}}</option>
+      <option v-for="cat in categories" :value=cat.id>{{cat.name}}</option>
     </select> 
   </div>
 </div>`

@@ -121,7 +121,7 @@ class mVat
 
   public function update(): bool
   {
-    $status = $this->dbConnection->query("update {$this->tableVat} SET name='{$this->name}' stawka='{$this->value}' WHERE id=" . $this->id);
+    $status = $this->dbConnection->query("update {$this->tableVat} SET name='{$this->name}' taxRate='{$this->value}' WHERE id=" . $this->id);
 
     return (bool) $status;
   }
@@ -136,7 +136,7 @@ class mVat
   public function save(int &$insertID = 0): bool
   {
     $status = $this->dbConnection->insert(
-      "insert INTO {$this->tableVat} (name, stawka) VALUES ('{$this->name}','{$this->value}')",
+      "insert INTO {$this->tableVat} (name, taxRate) VALUES ('{$this->name}','{$this->value}')",
       $insertID);
 
     return (bool) $status;

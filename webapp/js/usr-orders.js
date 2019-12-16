@@ -108,9 +108,9 @@ new Vue({
       this.objFilter = _obj;
 
       let dataFiltered = filterData(this.orders, _obj, this.selected, {
-        FILTER_STATUS: "id_statusu",
-        FILTER_DSTART: "data_zamowienia",
-        FILTER_DEND: "data_realizacji"
+        FILTER_STATUS: "statusID",
+        FILTER_DSTART: "dateOrder",
+        FILTER_DEND: "dateRealization"
       });
 
       let filtered = dataFiltered.filtered;
@@ -145,9 +145,9 @@ new Vue({
     <table :id=tableID class="zamowienia table table-striped table-hover table-sm ">
       <thead class="table-primary" >
         <th class="text-center col-sm-1" style="width: 8%;">{{phrases.LP}}</th>
-        <th class="text-center poiter" v-on:click="sort('data_zamowienia')">{{phrases.DATE_BEGIN}}</th>
-        <th class="text-center poiter" v-on:click="sort('data_realizacji')">{{phrases.DATE_END}}</th>
-        <th class="text-center poiter" v-on:click="sort('id_statusu')">{{phrases.STATUS}}</th>
+        <th class="text-center poiter" v-on:click="sort('dateOrder')">{{phrases.DATE_BEGIN}}</th>
+        <th class="text-center poiter" v-on:click="sort('dateRealization')">{{phrases.DATE_END}}</th>
+        <th class="text-center poiter" v-on:click="sort('statusID')">{{phrases.STATUS}}</th>
         <th class="text-center poiter" v-on:click="sort('completed')">{{phrases.PAYED}}</th>
         <th class="text-center poiter" v-on:click="sort('price')">{{phrases.PRICE}}</th>
         <th class="text-center poiter" v-on:click="sort('priceTransport')">{{phrases.TRANSPORT_PRICE}}</th>
@@ -156,14 +156,14 @@ new Vue({
       </thead>
       <tbody v-if="onFilterLenght>0">
         <tr v-for="(zamowienie,count) in orderSorted" :class="{ 
-          'o-inpg-bg': zamowienie.id_statusu == 1 , 
-          'o-cmpl-bg': zamowienie.id_statusu == 2,
-          'o-deny-bg': zamowienie.id_statusu == 3}">
+          'o-inpg-bg': zamowienie.statusID == 1 , 
+          'o-cmpl-bg': zamowienie.statusID == 2,
+          'o-deny-bg': zamowienie.statusID == 3}">
           
           <td class="text-center">{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
-          <td class="text-center">{{dateFormating(zamowienie.data_zamowienia)}}</td>
-          <td class="text-center">{{dateFormating(zamowienie.data_realizacji)}}</td>
-          <td class="text-center">{{statusy[zamowienie.id_statusu]}}</td>
+          <td class="text-center">{{dateFormating(zamowienie.dateOrder)}}</td>
+          <td class="text-center">{{dateFormating(zamowienie.dateRealization)}}</td>
+          <td class="text-center">{{statusy[zamowienie.statusID]}}</td>
           <td class="text-center" style="vertical-align: middle !important;">
             <i v-if="zamowienie.completed == 1" class="fa fa-check green"></i>
             <i v-else class="fa fa-close red"></i>
@@ -181,7 +181,7 @@ new Vue({
                 <span class="popuptext" id="myPopup">{{phrasesFilter.SHOW_DETAILS}}</span>
             </div>
             
-            <div class="popup" v-if="zamowienie.completed==0 && zamowienie.id_statusu==1" 
+            <div class="popup" v-if="zamowienie.completed==0 && zamowienie.statusID==1" 
               onMouseEnter="this.children[1].classList.toggle('show')" 
               onMouseLeave="this.children[1].classList.toggle('show')">
                 <a class="bg-white btn btn-small btn-outline-primary fa fa-money green"

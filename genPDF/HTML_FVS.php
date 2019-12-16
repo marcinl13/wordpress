@@ -21,14 +21,25 @@ class HTML_FVS extends PrefabPDF implements IPDF
   {
     $this->db = new DBConnection();
     $this->docId = $documentId;
+
+    self::setTableNames();
   }
 
   private function setTableNames()
   {
-    $noUsed= "";
+    $noUsed = "";
 
-    $this->db->getTableNames($noUsed, $noUsed, $noUsed, $this->tableOrders, $this->tableTransactions, 
-      $noUsed, $this->tableDocuments, $noUsed, $this->tableInvoices );
+    $this->db->getTableNames(
+      $noUsed,
+      $noUsed,
+      $noUsed,
+      $this->tableOrders,
+      $this->tableTransactions,
+      $noUsed,
+      $this->tableDocuments,
+      $noUsed,
+      $this->tableInvoices
+    );
   }
 
   public function getHtml(): string
@@ -40,22 +51,22 @@ class HTML_FVS extends PrefabPDF implements IPDF
     $result = $this->db->getRow(
       "sELECT * 
       FROM {$this->tableDocuments} d
-      LEFT JOIN {$this->tableInvoices} inv ON d.orderId = inv.id 
-      LEFT JOIN {$this->tableOrders} o ON inv.orderId = o.id 
+      LEFT JOIN {$this->tableInvoices} inv ON d.orderID = inv.id 
+      LEFT JOIN {$this->tableOrders} o ON inv.orderID = o.id 
       LEFT JOIN {$this->tableTransactions} t ON o.id = t.orderID
       WHERE d.id='{$this->docId}'",
       IDBDataFactor::ARRAY_A
     );
 
     $price = (float) $result['price'] < (float) $result['total'] ? (float) $result['total'] : (float) $result['price'];
-    
+
     $prefab = new PrefabPDF();
 
     $text = '';
-    $text .= $prefab->prepareDates((string) $result['data_zamowienia'], (string) $result['dateEnd']);
+    $text .= $prefab->prepareDates((string) $result['dateCreate'], (string) $result['dateEnd']);
     $text .= $prefab->prepareTitle($result);
     $text .= "<br/><div style='margin:0 20px;'>" .
-      $prefab->prepareBuyer($result['id_uzytkownika']) .
+      $prefab->prepareBuyer((int) $result['userID']) .
       $prefab->prepareSeller()  . "<div>";
     $text .= "<br><div style='heigth:50px; width:100%; margin:10px 0px;'>&nbsp;</div>";
     $text .=  "<br><center>" . self::tableSection($result) . "</center>";
@@ -68,7 +79,7 @@ class HTML_FVS extends PrefabPDF implements IPDF
 
   public function tableSection($result)
   {
-    $args = json_decode(base64_decode($result['produkty']), true);
+    $args = json_decode(base64_decode($result['products']), true);
 
     $args = DataRefactor::refactorToFVSTable($args);
 

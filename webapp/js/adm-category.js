@@ -84,7 +84,7 @@ new Vue({
       if (_id != null) {
         var filtered = this.categories.filter(data => data.id == _id)[0];
         defaultID = filtered.id;
-        defaultName = filtered.nazwa;
+        defaultName = filtered.name;
         defaultTitle = this.phrases.EDIT_CATEGORY;
       }
 
@@ -166,7 +166,7 @@ new Vue({
       this.objFilter = _obj;
 
       let dataFiltered = filterData(this.categories, _obj, this.selected, {
-        FILTER_STW: "nazwa"
+        FILTER_STW: "name"
       });
 
       let filtered = dataFiltered.filtered;
@@ -206,13 +206,13 @@ new Vue({
     <table :id=tableID class="table table-striped table-hover table-sm ">
       <thead class="table-primary">
         <th class="text-center">{{phrases.LP}}</th>
-        <th @click="sort('nazwa')" class="text-center poiter">{{phrases.NAME}}</th>
+        <th @click="sort('name')" class="text-center poiter">{{phrases.NAME}}</th>
         <th class="text-center ">{{phrases.OPTIONS}}</th>
       </thead>
       <tbody class="table-light" v-if="onFilterLenght>0">
         <tr v-for="(category, count) in productsCategory">
           <td class="text-center">{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
-          <td class="text-center">{{category.nazwa}}</td>
+          <td class="text-center">{{category.name}}</td>
           <td class="text-center">
             <button class="btn btn-sm btn-success" v-on:click="onEditCategory(category.id)">{{phrasesFilter.EDIT}}</button>
             <button class="btn btn-sm btn-danger" v-on:click="onDeleteCategory(category.id)">{{phrasesFilter.DELETE}}</button>

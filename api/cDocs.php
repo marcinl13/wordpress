@@ -71,7 +71,7 @@ class cDocs
       $res = $docFVS->getDetails($body['id']);
 
 
-      $args = json_decode(base64_decode($res['produkty']), true);
+      $args = json_decode(base64_decode($res['products']), true);
       $args = DataRefactor::refactorToFVSTable($args);
 
       $html = BuidTable::buildTable($args['tbody'], $args['tfoot'], false);
@@ -83,7 +83,7 @@ class cDocs
       $res = $docWZ->getDetails($body['id']);
 
 
-      $args = json_decode(base64_decode($res['produkty']), true);
+      $args = json_decode(base64_decode($res['products']), true);
       $args = DataRefactor::refactorToWZTable($args);
 
       $html = BuidTable::buildTable($args, "", false);

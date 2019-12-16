@@ -70,7 +70,7 @@ class mMagazine
     $wz = IDocuments::WZ_ID;
 
     $currentProdMagStatus = $this->dbConnection->getResults("
-        SELECT p.id, p.nazwa as name,  
+        SELECT p.id, p.name as name,  
         
         (Select sum(m.quantity) FROM {$this->tableMagazine} m where m.docType ={$pz} and p.id = m.productID) as inMag,
         
@@ -91,14 +91,14 @@ class mMagazine
 
     $quantityProductGroup = $this->dbConnection->getResults(
       "sELECT 
-          p.nazwa, 
+          p.name, 
           SUM(mg.quantity) as quantity, 
-          MONTH(z.data_zamowienia) as m,
-          YEAR(z.data_zamowienia) as y 
+          MONTH(z.dateOrder) as m,
+          YEAR(z.dateOrder) as y 
         FROM {$this->tableMagazine} mg
         LEFT JOIN {$this->tableProducts} p  ON mg.productID = p.id
         LEFT JOIN {$this->tableOrders} z ON mg.groupId = z.id
-        WHERE mg.docType = {$wz} and YEAR(z.data_zamowienia) = YEAR(CURDATE())
+        WHERE mg.docType = {$wz} and YEAR(z.dateOrder) = YEAR(CURDATE())
         GROUP BY m,p.id,y",
       IDBDataFactor::ARRAY_A
     );
@@ -115,11 +115,11 @@ class mMagazine
   public function getChar01Data(): array
   {
     $output = $this->dbConnection->getResults(
-      "sELECT SUM(total) as price, MONTH(data_zamowienia) as m, YEAR(data_zamowienia) as y 
+      "sELECT SUM(total) as price, MONTH(dateOrder) as m, YEAR(dateOrder) as y 
       FROM {$this->tableOrders} 
-      WHERE visible = 1 AND id_statusu =2 
+      WHERE visible = 1 AND statusID =2 
       GROUP BY y,m 
-      ORDER BY YEAR(data_zamowienia) DESC",
+      ORDER BY YEAR(dateOrder) DESC",
       IDBDataFactor::ARRAY_A
     );
 
@@ -148,14 +148,14 @@ class mMagazine
     $productCategory = $this->dbConnection->getResults(
       "sELECT 
         SUM(mg.quantity) as quantity, 
-        MONTH(z.data_zamowienia) as m,
-        YEAR(z.data_zamowienia) as y,
-        k.nazwa as categoryName
+        MONTH(z.dateOrder) as m,
+        YEAR(z.dateOrder) as y,
+        k.name as categoryName
       FROM {$this->tableMagazine} mg
       LEFT JOIN {$this->tableProducts} p  ON mg.productID = p.id
-      LEFT JOIN {$this->tableCategory} k ON p.id_kategori = k.id
+      LEFT JOIN {$this->tableCategory} k ON p.categoryID = k.id
       LEFT JOIN {$this->tableOrders} z ON mg.groupId = z.id
-      WHERE mg.docType = {$wz} and YEAR(z.data_zamowienia) = YEAR(CURDATE())
+      WHERE mg.docType = {$wz} and YEAR(z.dateOrder) = YEAR(CURDATE())
       GROUP BY y,m, k.id",
       IDBDataFactor::ARRAY_A
     );

@@ -92,13 +92,13 @@ class cOrder
     $statusId = $body['id_statusu'];
     $status = IHttpStatusCode::Forbidden;
 
-    //validate
-    if (mb_strlen($name) == 0) {
-      return new \WP_REST_Response(array(
-        "status" => IHttpStatusCode::Not_Found,
-        "message" => "Uzupełnij pola"
-      ), IHttpStatusCode::Not_Found);
-    }
+    // //validate
+    // if (mb_strlen($name) == 0) {
+    //   return new \WP_REST_Response(array(
+    //     "status" => IHttpStatusCode::Not_Found,
+    //     "message" => "Uzupełnij pola"
+    //   ), IHttpStatusCode::Not_Found);
+    // }
 
     //grand access only to admin role
     if (!$this->restAccess->accessAdmin($token, $userId)) {

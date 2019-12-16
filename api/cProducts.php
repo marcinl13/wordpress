@@ -137,7 +137,7 @@ class cProducts
     $userId = 0;
     $id = (int) $body['id'];
     $token = (string) isset($body['token']) ? $body['token'] : '';
-    $nazwa = (string) $body['nazwa'];
+    $name = (string) $body['name'];
     $netto = (float) $body['netto'];
     $brutto = (float) $body['brutto'];
     $id_stawki = (int) $body['id_stawki'];
@@ -159,13 +159,13 @@ class cProducts
     $mProduct = new mProduct();
     $mProduct->setId((int) $id);
     $mProduct->setToken($token);
-    $mProduct->setName((string) $nazwa);
+    $mProduct->setName((string) $name);
     $mProduct->setVatID((int) $id_stawki);
     $mProduct->setCategoryId((int) $id_kategori);
     $mProduct->setNetto((float) $netto);
     $mProduct->setBrutto((float) $brutto);
-    $mProduct->setImage((string) $body['zdjecie']);
-    $mProduct->setDescription((string) $body['opis']);
+    $mProduct->setImage((string) $body['image']);
+    $mProduct->setDescription((string) $body['description']);
     $mProduct->setJm((string) $body['unit']);
 
     

@@ -25,7 +25,7 @@ class HTML_PZ extends PrefabPDF implements IPDF
     $prefab = new PrefabPDF();
 
     $text = '';
-    $text .= $prefab->prepareDates((string) $res['data_zamowienia'], (string) $res['dateEnd']);
+    $text .= $prefab->prepareDates((string) $res['dateCreate'], (string) $res['dateEnd']);
     $text .= $prefab->prepareTitle($res);
     $text .= "<br><div style='heigth:50px; width:100%; margin:10px 0px;'>&nbsp;</div>";
     $text .=  "<br><center>" . self::tableSection($res) . "</center>";

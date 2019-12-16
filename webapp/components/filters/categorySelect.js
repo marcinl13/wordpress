@@ -18,7 +18,7 @@ export default Vue.component("component-categorySelect", {
   template: `
   <select class="form-control" name="category" id="category" v-on:change="chooseCategory($event.target.value);">
     <option value="0">Wybierz wszystie</option>
-    <option v-for="cat in category" :value=cat.id>{{cat.nazwa}}</option>
+    <option v-for="cat in category" :value=cat.id>{{cat.name}}</option>
   </select>  
   `
 });

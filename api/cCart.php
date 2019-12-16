@@ -9,6 +9,7 @@ use Models\mOrder;
 use Models\PaymentPayU;
 use Payments\FactoryPaymentGate;
 use Payments\Gates\IPaymentsGates;
+use Plugin\fileRW;
 
 class cCart
 {
@@ -19,8 +20,26 @@ class cCart
     $this->restAccess = new rAccess();
   }
 
+  private function addTransportPrice(array $orderProducts, float &$transportPrice = 0.00)
+  {
+    $config = fileRW::readJsonAssoc(CONFIG_FILE);
+    $transportPrice = (float) $config['transportPrice'];
+
+    $orderProducts[] = array(
+      'name' => 'transport',
+      'price' => $transportPrice,
+      'quantity' => 1
+    );
+
+    return $orderProducts;
+  }
+
   private function paymentGate(string $description, float $totalPrice, int $userId, int $orderID, $orderProducts)
   {
+    $transportPrice = 0.00;
+    $orderProducts = self::addTransportPrice($orderProducts, $transportPrice);
+    $totalPrice += $transportPrice;
+
     $gate = new FactoryPaymentGate();
 
     $paymentModel = new PaymentPayU();
@@ -39,21 +58,21 @@ class cCart
     $token = isset($body['token']) ? $body['token'] : '';
 
     //grand access only to users
-      if (!$this->restAccess->accessNonAdmin($token, $userId)) {
-        return new \WP_REST_Response(array(
-          "status" => IHttpStatusCode::Unauthorized,
-          "message" => "Unauthorized",
-          "data" => array()
-        ), IHttpStatusCode::Unauthorized);
-      }
-    
+    if (!$this->restAccess->accessNonAdmin($token, $userId)) {
+      return new \WP_REST_Response(array(
+        "status" => IHttpStatusCode::Unauthorized,
+        "message" => "Unauthorized",
+        "data" => array()
+      ), IHttpStatusCode::Unauthorized);
+    }
+
 
     $model = new mOrder();
     // $model->setUserID($userId);
     $model->setIds($ids);
     $output = $model->getMany();
 
-    
+
     $msg = array(
       "status" => !empty($output) ? IHttpStatusCode::OK : IHttpStatusCode::Forbidden,
       "message" => !empty($output) ? "OK" : "Forbidden",
@@ -119,7 +138,7 @@ class cCart
       "message" => $status ? "Created" : "Forbidden",
       "redirect" => $redirect
     );
-    
+
     if ($redirect == null) {
       $msg['status'] = IHttpStatusCode::No_Content;
       $msg["message"] = IHttpStatusCode::No_Content;

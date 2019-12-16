@@ -13,7 +13,7 @@ window.onload = () => {
       selectedProducts: 0,
       selectedCategory: 0,
       currentListType: "",
-      currentSort: "nazwa",
+      currentSort: "name",
       currentSortDir: "desc",
       currentPage: 1,
       selected: 0,
@@ -107,9 +107,9 @@ window.onload = () => {
         this.objFilter = _obj;
 
         let dataFiltered = filterData(this.products, _obj, this.selected, {
-          FILTER_STW: "nazwa",
-          FILTER_CAT: "id_kategori",
-          FILTER_STATUS: "id_statusu"
+          FILTER_STW: "name",
+          FILTER_CAT: "categoryID",
+          FILTER_STATUS: "statusID"
         });
 
         let filtered = dataFiltered.filtered;

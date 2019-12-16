@@ -55,9 +55,9 @@ class DOC_WZ extends mDocuments2 implements IDoc
 
     $db->getTableNames($noUsed, $noUsed, $noUsed, $ordersTable, $noUsed, $noUsed, $documentsTable);
     
-    $args = $db->getRow("select d.*, o.produkty
+    $args = $db->getRow("select d.*, o.products
       FROM {$documentsTable} d 
-      LEFT JOIN {$ordersTable} o ON d.orderId = o.id
+      LEFT JOIN {$ordersTable} o ON d.orderID = o.id
       WHERE d.id={$id}"
     , IDBDataFactor::ARRAY_A);
 

@@ -57,10 +57,10 @@ class DOC_FVS extends mDocuments2 implements IDoc
 
 
     $args = $db->getRow(
-      "select d.*, o.produkty
+      "select d.*, o.products
         FROM {$documentsTable} d 
-        LEFT JOIN {$invoicesTable} inv ON d.orderId = inv.id
-        LEFT JOIN {$ordersTable} o ON inv.orderId = o.id
+        LEFT JOIN {$invoicesTable} inv ON d.orderID = inv.id
+        LEFT JOIN {$ordersTable} o ON inv.orderID = o.id
         WHERE d.id={$id}",
       IDBDataFactor::ARRAY_A);
 

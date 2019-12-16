@@ -2,6 +2,7 @@
 
 namespace Payments;
 
+use DateTime;
 use DB\DBConnection;
 use DB\IDBDataFactor;
 use Payments\Status\IPaymentsStatus;
@@ -25,10 +26,11 @@ class PayU implements IPaymentsStatus
     self::getJSONData();
   }
 
-  private function getTableNames(){
+  private function getTableNames()
+  {
     $noUsed = "";
 
-    $this->db->getTableNames($noUsed,$noUsed, $noUsed, $noUsed, $this->tableTransactions);
+    $this->db->getTableNames($noUsed, $noUsed, $noUsed, $noUsed, $this->tableTransactions);
   }
 
   private function getJSONData()
@@ -102,22 +104,12 @@ class PayU implements IPaymentsStatus
 
     self::getJSONData();
 
-    //add transport price 
-
-    $config = fileRW::readJsonAssoc(CONFIG_FILE);
-    $transportPrice = (float) $config['transportPrice'];
-
-    $productList[] = array(
-      'name' => 'transport',
-      'price' => $transportPrice,
-      'quantity' => 1
-    );
 
     $mID = $this->payuJSON['merchantPosId'];
     $notify = home_url() . "/" . IShortCodes::PAYMENT_NOTYFICATION . "?mode=p&o={$orderID}";
     $url = $this->payuJSON['paymentMode'] == 'sandbox' ? $this->payuJSON['payuSandboxUrl'] : $this->payuJSON['payuProductionUrl'];
 
-    $totalPrice = intval($totalPrice * 100) + intval($transportPrice * 100);
+    $totalPrice = intval($totalPrice * 100);
     $ip = "127.0.0.1";
     $currency = (string) fileRW::readJsonAssoc(CONFIG_FILE)['currencyCode'];
     $buyer = self::prepareBuyer($buyerID);
@@ -152,7 +144,6 @@ class PayU implements IPaymentsStatus
 
     $response = get_object_vars(json_decode($response));
 
-
     return array(
       "hashOrder" => $response['orderId'],
       "status" => get_object_vars($response['status'])['statusCode'],
@@ -162,8 +153,10 @@ class PayU implements IPaymentsStatus
 
   private function saveTransaction($orderID, $userID, $payuOrder)
   {
-    $tableTransaction = $this->tableTransactions;
+    self::getTableNames();
 
+    $tableTransaction = $this->tableTransactions;
+    
     $hashOrder = $payuOrder['hashOrder'];
     $redirect = $payuOrder['redirectUri'];
     $status = IPaymentsStatus::
@@ -226,9 +219,9 @@ class PayU implements IPaymentsStatus
     trace($prepare);
 
     $status = IPaymentsStatus::COMPLETED;
+    $dataUpdated = date('Y-m-d H:i:s');
 
     if ($prepare['status'] == 'COMPLETED')
-      $this->db->query("uPDATE {$tableTransaction} SET status='{$status}' WHERE orderID={$orderID}");
+      $this->db->query("uPDATE {$tableTransaction} SET status='{$status}', dataCreate='{$dataUpdated}'  WHERE orderID={$orderID}");
   }
-
 }

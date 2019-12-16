@@ -27,7 +27,7 @@ function serverGet(_url, _data) {
   return geter(_url, _data);
 }
 
-function policzBrutto(_target, _stawki = null) {
+let calculateBrutto = (_target, _stawki = null) => {
   var html = _target.offsetParent.childNodes[1].childNodes[0].childNodes[1].childNodes[1].children;
   var stawka = 0.0;
   var cenaBrutto = 0.0;
@@ -48,7 +48,7 @@ function policzBrutto(_target, _stawki = null) {
 
   html[3].children[1].value = "";
   html[3].children[1].value += cenaBrutto;
-}
+};
 
 // function isNumber(_string) {
 //   _string = parseFloat(_string);

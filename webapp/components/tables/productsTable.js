@@ -19,7 +19,7 @@ export default Vue.component("component-productsTable", {
     <thead class="table-primary">
       <th class="text-center">{{languageSettings.LP}}</th>
       <th class="text-center">{{languageSettings.PHOTO}}</th>
-      <th class="text-center poiter" v-on:click="sorting('nazwa')">{{languageSettings.NAME}}</th>
+      <th class="text-center poiter" v-on:click="sorting('name')">{{languageSettings.NAME}}</th>
       <th class="text-center poiter" v-on:click="sorting('id_kategori')">{{languageSettings.CATEGORY}}</th>
       <th class="text-center poiter" v-on:click="sorting('price')">{{languageSettings.PRICE}}</th>
       <th class="text-center"></th>
@@ -27,8 +27,8 @@ export default Vue.component("component-productsTable", {
     <tbody class="table-light" v-if="dataSize>0">
       <tr v-for="(product, i) in productsData">
         <td class="text-center align-middle">{{ ((-1 + currentPage) * selectRows) +( i+1)}}</td>
-        <td><img class="small-img" :src=imagePreview(product.zdjecie) ></td>
-        <td class="text-center align-middle" >{{product.nazwa}}</td>
+        <td><img class="small-img" :src=imagePreview(product.image) ></td>
+        <td class="text-center align-middle" >{{product.name}}</td>
         <td class="text-center align-middle" >{{product.nazwa_kategori}}</td>
         <td class="text-center align-middle" >{{product.price}} zł</td>  
         <td class="text-center align-middle" >

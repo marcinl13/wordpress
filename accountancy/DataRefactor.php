@@ -23,7 +23,7 @@ class DataRefactor
     $result[] = array(
       self::$phrases['LP'] =>  1,
       self::$phrases['NAME'] => $array['productName'],
-      self::$phrases['UNIT'] => $array['jm'],
+      self::$phrases['UNIT'] => $array['unit'],
       self::$phrases['QUANTITY'] => $array['quantity']
     );
 

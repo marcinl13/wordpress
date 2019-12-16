@@ -58,7 +58,7 @@ class mInvoices
 
 
     $status = $this->dbConnection->insert(
-      "insert INTO {$this->tableInvoices}(userId,docType,orderId,price) VALUES ('{$userId}','{$docType}','{$orderId}','{$price}')"
+      "insert INTO {$this->tableInvoices}(userId,docType,orderID,price) VALUES ('{$userId}','{$docType}','{$orderId}','{$price}')"
       , $insertID);
 
     return (bool) $status;

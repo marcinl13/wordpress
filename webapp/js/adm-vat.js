@@ -95,7 +95,7 @@ new Vue({
         var filtered = this.vatList.filter(data => data.id == _id)[0];
         defaultID = filtered.id;
         defaultName = filtered.name;
-        defaultValue = filtered.stawka;
+        defaultValue = filtered.taxRate;
         defaultTitle = this.phrases.EDIT_VAT;
       }
 
@@ -221,15 +221,15 @@ new Vue({
     <table :id=tableID class="table table-striped table-hover table-sm ">
       <thead class="table-primary">
         <th class="text-center">{{phrases.LP}}</th>
-        <th @click="sort('nazwa')" class="text-center poiter">{{phrases.NAME}}</th>
-        <th @click="sort('stawka')" class="text-center poiter">{{phrases.RATE}}</th>
+        <th @click="sort('name')" class="text-center poiter">{{phrases.NAME}}</th>
+        <th @click="sort('taxRate')" class="text-center poiter">{{phrases.RATE}}</th>
         <th class="text-center ">{{phrases.OPTIONS}}</th>
       </thead>
       <tbody class="table-light" v-if="onFilterLenght>0">
         <tr v-for="(vat, count) in ComputedVat">
           <td class="text-center">{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
           <td class="text-center">{{vat.name}}</td>
-          <td class="text-center">{{vat.stawka}}</td>
+          <td class="text-center">{{vat.taxRate}}</td>
           <td class="text-center">
             <button class="btn btn-sm btn-success" v-on:click="onEditVat(vat.id)">{{phrasesFilter.EDIT}}</button>
             <button class="btn btn-sm btn-danger" v-on:click="onDeleteVat(vat.id)">{{phrasesFilter.DELETE}}</button>

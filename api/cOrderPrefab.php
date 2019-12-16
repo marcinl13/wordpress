@@ -112,7 +112,7 @@ class cOrderPrefab
       $orderID = $insertId;
 
       self::TakeProductsFromMagazine($insertId, $order);
-      die();
+
       $redirect = self::paymentGate("Zapłata za zamowienie nr {$orderID}", floatval($sumPrice), (int) $userId, (int) $orderID, $order);
     }
 

@@ -283,23 +283,28 @@ class AdminKokpitMenu
     if (isset($_REQUEST['mode']) && isset($_REQUEST['id'])) {
       if ($_REQUEST['mode'] == 'ccc' && isset($_REQUEST['id'])) {
 
+        $unUsed = "";
+        $orderTable = "";
+
         $db = new DBConnection();
 
+        $db->getTableNames($unUsed, $unUsed, $unUsed, $orderTable);
+
         $orderID = (int) $_REQUEST['id'];
-        $res = $db->getRow("select * from wp_sklep_zamowienia where id={$orderID}", IDBDataFactor::ARRAY_A);
+        $res = $db->getRow("select * from {$orderTable} where id={$orderID}", IDBDataFactor::ARRAY_A);
 
         $inserted = 0;
-        $docWZ = new DOC_WZ($orderID, $res['data_zamowienia']);
+        $docWZ = new DOC_WZ($orderID, $res['dateOrder']);
         $docWZ->save($inserted);
 
 
         $invNew = 0;
-        $invoice = new addInvoice($res['id_uzytkownika'], IDocuments::FVS_ID, $orderID, $res['kwota']);
+        $invoice = new addInvoice($res['userID'], IDocuments::FVS_ID, $orderID, $res['total']);
         $invoice->save($invNew);
 
 
         $invDocNew = 0;
-        $invoiceDoc = new DOC_FVS($invNew, $res['data_zamowienia']);
+        $invoiceDoc = new DOC_FVS($invNew, $res['dateOrder']);
         $invoiceDoc->save($invDocNew);
 
 
@@ -309,7 +314,7 @@ class AdminKokpitMenu
         <h3>
           <a href='?page=docs&mode=show&dT=" . IDocuments::WZ_ID . "&id=" . $inserted . "'>" . $created . IDocuments::WZ . "</a>
           <br>
-          <a href='?page=docs&mode=show&dT=" . IDocuments::FVS_ID . "&id=" . $inserted . "'>" . $created . IDocuments::FVS . "</a>
+          <a href='?page=docs&mode=show&dT=" . IDocuments::FVS_ID . "&id=" . $invNew . "'>" . $created . IDocuments::FVS . "</a>
         </h3>";
       }
     } else {

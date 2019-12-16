@@ -72,6 +72,6 @@ class DBConnection implements IDBDataFactor, ITableNames
     $documentsTable = $shopPrefix . ITableNames::Documents18;
     $userTable =  $wpPrefix . ITableNames::Users;
 
-    $invoicesTable = $invoicesTable === null ? "" : $wpPrefix . ITableNames::Invoices;
+    $invoicesTable = $invoicesTable === null ? "" : $shopPrefix . ITableNames::Invoices;
   }
 }

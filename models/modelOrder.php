@@ -213,9 +213,9 @@ class mOrder
     $args = $this->dbConnection->getResults(
       "select o.*,(o.price+o.priceTransport) as total,  u.user_nicename as user, t.status as completed, IF(d.id >1 ,1,0) as doc
       FROM {$this->tableOrders} o
-      LEFT JOIN {$this->tableUsers} u ON o.id_uzytkownika = u.ID
+      LEFT JOIN {$this->tableUsers} u ON o.userID = u.ID
       LEFT JOIN {$this->tableTransaction} t ON t.orderID = o.ID
-      LEFT JOIN {$this->tableDocuments} d ON d.orderId = o.ID
+      LEFT JOIN {$this->tableDocuments} d ON d.orderID = o.ID
       GROUP BY o.id 
       ORDER BY o.id DESC", 
       IDBDataFactor::ARRAY_A
@@ -227,10 +227,10 @@ class mOrder
   public function getOne(): array //
   {
     $args = $this->dbConnection->getResults(
-      "select o.id_statusu,o.data_zamowienia,o.data_realizacji,o.price,o.priceTransport,(o.price+o.priceTransport)as total, o.produkty, t.status as completed, if(t.status=0, t.redirect, 0 ) as redirect
+      "select o.statusID,o.dateOrder,o.dateRealization,o.price,o.priceTransport,(o.price+o.priceTransport)as total, o.products, t.status as completed, if(t.status=0, t.redirect, 0 ) as redirect
       FROM {$this->tableOrders} o
       JOIN {$this->tableTransaction} t ON t.orderID = o.ID
-      WHERE o.id_uzytkownika={$this->userID} 
+      WHERE o.userID={$this->userID} 
       ORDER by o.id desc", 
       IDBDataFactor::ARRAY_A
     );
@@ -241,14 +241,14 @@ class mOrder
   public function getProductListFromOrder(int $orderID, int $userID): array
   {
     $args = $this->dbConnection->getRow("
-      select produkty, priceTransport 
+      select products, priceTransport 
       from {$this->tableOrders} 
-      WHERE id={$orderID} and id_uzytkownika={$userID} 
+      WHERE id={$orderID} and userID={$userID} 
       LIMIT 1", 
       IDBDataFactor::ARRAY_A
     );
 
-    $args2 = json_decode(base64_decode($args['produkty']), true);
+    $args2 = json_decode(base64_decode($args['products']), true);
 
     return (array) array($args2, $args['priceTransport']);
   }
@@ -258,9 +258,9 @@ class mOrder
     $ids = self::getIds();
     $args = $this->dbConnection->getResults(
       "select 
-          p.id, p.nazwa, p.jm, p.netto, ROUND(p.netto *(1+ sv.stawka),2) as price , (1) as quantity 
+          p.id, p.name, p.unit, p.netto, ROUND(p.netto *(1+ sv.taxRate),2) as price , (1) as quantity 
         FROM {$this->tableProducts} p 
-        INNER JOIN {$this->tableVat} sv ON p.id_stawki = sv.id 
+        INNER JOIN {$this->tableVat} sv ON p.taxRateID = sv.id 
         WHERE p.id IN({$ids})",
       IDBDataFactor::ARRAY_A
     );
@@ -277,7 +277,7 @@ class mOrder
   public function getOrderData(int $orderID)
   {
     $args = $this->dbConnection->getResults(
-      "select o.price, o.priceTransport,(o.price+o.priceTransport) as total, o.produkty
+      "select o.price, o.priceTransport,(o.price+o.priceTransport) as total, o.products
       FROM {$this->tableOrders} o
       JOIN {$this->tableTransaction} t ON t.orderID = o.ID
       WHERE o.id={$orderID} 
@@ -290,7 +290,7 @@ class mOrder
 
   public function update(): bool //
   {
-    $status = $this->dbConnection->query("update {$this->tableOrders} SET id_statusu={$this->statusID}, data_realizacji='{$this->orderDate}'
+    $status = $this->dbConnection->query("update {$this->tableOrders} SET statusID={$this->statusID}, dateRealization='{$this->orderDate}'
     WHERE id={$this->id}");
 
     return (bool) $status;
@@ -300,7 +300,7 @@ class mOrder
   {
     $days = (int) fileRW::readJsonAssoc(CONFIG_FILE)['dayCancel'];
 
-    $status = $this->dbConnection->query("update {$this->tableOrders} SET id_statusu = 3 WHERE DATEDIFF(CURDATE(),data_zamowienia)>{$days} AND id_statusu = 1");
+    $status = $this->dbConnection->query("update {$this->tableOrders} SET statusID = 3 WHERE DATEDIFF(CURDATE(),dateOrder)>{$days} AND statusID = 1");
 
     return (bool) $status;
   }
@@ -319,7 +319,7 @@ class mOrder
     $priceTransport = self::getTransportPrice();
     $total = (float) ($price + $priceTransport);
 
-    $status = $this->dbConnection->insert("insert INTO {$this->tableOrders} (id_uzytkownika, price, priceTransport, total, produkty)
+    $status = $this->dbConnection->insert("insert INTO {$this->tableOrders} (userID, price, priceTransport, total, products)
     VALUES ('{$this->userID}', '{$price}', '{$priceTransport}', '{$total}', '{$this->orderDetails}')", $insertID);
 
     return (bool) $status;
