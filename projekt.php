@@ -21,7 +21,7 @@ if (!defined('PROJEKT_PLUGIN_FILE')) {
 	define("PROJEKT_PLUGIN_FILE", __DIR__ . DS);
 	define("ROOT", PROJEKT_PLUGIN_FILE . DS);
 
-	define("CONFIG_FILE", ROOT . "config.json"); //config file
+	// define("CONFIG_FILE", ROOT . "config.json"); //config file
 	// define("CONFIG_FILE", ROOT . "config.conf"); //config file
 
 	define("INCLUDES_PATH", ROOT . "includes" . DS);
@@ -38,6 +38,11 @@ if (!defined('PROJEKT_PLUGIN_FILE')) {
 
 	//v18
 	define("ACCOUNTANCY", ROOT . "accountancy" . DS); //new
+	define("GEN_PDF", ROOT . "genPDF" . DS); //new
+
+	//v20
+	define("CONFIGS", ROOT . "configs" . DS); //new
+	define("CONFIG_FILE", CONFIGS . "config.json"); //config file
 }
 
 define("PROJECT_PREFIX", "sklep_");

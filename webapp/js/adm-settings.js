@@ -37,9 +37,7 @@ new Vue({
   },
   template: `
   <div class="d-block w-100 px-3 mt-3">
-    <div>
-      <a class="btn btn-primary btn-small" href="page=settings&action=import">import</a>
-    </div>
+    
 
     <button
       v-for="tab in tabs"

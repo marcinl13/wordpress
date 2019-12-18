@@ -1,7 +1,5 @@
 <?php
 
-//v18
-define("GEN_PDF", ROOT . "genPDF" . DS); //new
 
 #region interfaces
 
