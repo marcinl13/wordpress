@@ -58,8 +58,7 @@ class AdminKokpitMenu
       array($category, 'category', __CLASS__ . '::optionCategory'),
       array($vat, 'vat', __CLASS__ . '::optionVats'),
       array($orders, 'orders', __CLASS__ . '::optionOrders'),
-      array($doc, 'docs', __CLASS__ . '::optionDocs'),
-      array('', 'test', __CLASS__ . '::optionTest')
+      array($doc, 'docs', __CLASS__ . '::optionDocs')
     );
 
     $namespace = $args[0][1];
@@ -356,14 +355,6 @@ class AdminKokpitMenu
       $src->inputMe('adm-order');
     }
   }
-
-  public function optionTest() //walic po testach
-  {
-    $p = new mDocuments2();
-    $p = $p->getAll();
-    trace($p);
-  }
-
 
   public function PluginUpdate()
   {
