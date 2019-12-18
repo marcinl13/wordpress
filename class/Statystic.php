@@ -22,6 +22,7 @@ class Statystic
     self::drawChart03();
     self::drawChart04();
     self::drawLastProduct(6);
+    echo "</div>";
   }
 
   //charts
