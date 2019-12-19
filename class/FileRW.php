@@ -23,6 +23,7 @@ class fileRW
       "invoiceFormat" => "NR/DD/MM/RRRR",
       "html2pdfrocket" => "",
       "lang" => "PL",
+      "dbv" => "18",
       "transportPrice" => "0.00",
       "dayCancel" => 7,
       "SHOP" => array("name" => "", "adress" => "", "email" => "", "logoLink" => "")

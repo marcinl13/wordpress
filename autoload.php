@@ -62,7 +62,6 @@ include_once PAYMENTS . "FactoryPaymentGate.php";
 #endregion
 
 #region DB
-include_once TABLE_DB . "cTabelki.php"; //
 include_once TABLE_DB . "tCategory.php";
 include_once TABLE_DB . "tOrders.php";
 include_once TABLE_DB . "tProducts.php";

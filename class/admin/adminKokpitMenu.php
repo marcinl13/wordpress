@@ -15,7 +15,6 @@ use Documents\IDocuments;
 use Hooks\CustomHooks;
 use HtmlToPDF;
 use Langs\Phrases;
-use Models\v18\mDocuments2;
 use Statystic\Statystic;
 use Pdf\HTML_FVS;
 use Pdf\HTML_PZ;

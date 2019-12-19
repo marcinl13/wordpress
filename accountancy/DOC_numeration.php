@@ -3,10 +3,8 @@
 namespace Accountancy;
 
 use DateTime;
-use DB\cTabelki;
 use DB\DBConnection;
 use DB\IDBDataFactor;
-use TableDB\ITableNames;
 
 class Numeration
 {
@@ -37,8 +35,9 @@ class Numeration
 
   private function setTableName()
   {
-    $table = new cTabelki();
-    $this->docTable = $table->getTableName(ITableNames::Documents18);
+    $noUsed = "";
+
+    $this->db->getTableNames($noUsed, $noUsed, $noUsed, $noUsed, $noUsed, $noUsed, $this->docTable);
   }
 
   public function getNextNumber(int $docType = 1): array

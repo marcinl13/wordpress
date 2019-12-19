@@ -156,7 +156,7 @@ class PayU implements IPaymentsStatus
     self::getTableNames();
 
     $tableTransaction = $this->tableTransactions;
-    
+
     $hashOrder = $payuOrder['hashOrder'];
     $redirect = $payuOrder['redirectUri'];
     $status = IPaymentsStatus::
@@ -219,9 +219,8 @@ class PayU implements IPaymentsStatus
     trace($prepare);
 
     $status = IPaymentsStatus::COMPLETED;
-    $dataUpdated = date('Y-m-d H:i:s');
 
     if ($prepare['status'] == 'COMPLETED')
-      $this->db->query("uPDATE {$tableTransaction} SET status='{$status}', dataCreate='{$dataUpdated}'  WHERE orderID={$orderID}");
+      $this->db->query("uPDATE {$tableTransaction} SET status='{$status}'  WHERE orderID={$orderID}");
   }
 }

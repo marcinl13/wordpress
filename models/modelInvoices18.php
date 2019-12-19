@@ -2,9 +2,7 @@
 
 namespace Models\v18;
 
-use DB\cTabelki;
 use DB\DBConnection;
-use TableDB\ITableNames;
 
 class mInvoices
 {
@@ -28,16 +26,16 @@ class mInvoices
 
   private function setTableName()
   {
-    $table = new cTabelki();
+    $noUsed = "";
 
-    $this->tableInvoices = $table->getTableName(ITableNames::Invoices);
+    $this->dbConnection->getTableNames($noUsed, $noUsed, $noUsed, $noUsed, $noUsed, $noUsed, $noUsed, $noUsed,  $this->tableInvoices);
   }
 
   #region CRUD
 
   public function update(): bool
   {
-    $status = false; 
+    $status = false;
 
     return (bool) $status;
   }
@@ -58,8 +56,9 @@ class mInvoices
 
 
     $status = $this->dbConnection->insert(
-      "insert INTO {$this->tableInvoices}(userId,docType,orderID,price) VALUES ('{$userId}','{$docType}','{$orderId}','{$price}')"
-      , $insertID);
+      "insert INTO {$this->tableInvoices}(userId,docType,orderID,price) VALUES ('{$userId}','{$docType}','{$orderId}','{$price}')",
+      $insertID
+    );
 
     return (bool) $status;
   }

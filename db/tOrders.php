@@ -2,22 +2,31 @@
 
 namespace DB;
 
-use TableDB\ITableNames;
-
 class tOrders
 {
   private $tName;
-  private $collate;
+  private $update = false;
+  private $currentVersion = 0;
 
-  function __construct()
+  function __construct(bool $update = false, int $version = 0)
   {
-    $tab = new cTabelki();
-    $this->tName = $tab->getTableName(ITableNames::Orders);
-    $this->collate = $tab->getCollate();
+    $this->update = $update;
+    $this->currentVersion = $version;
+
+    $noUsed = "";
+    $db = new DBConnection();
+    $db->getTableNames($noUsed, $noUsed, $noUsed, $this->tName);
   }
 
   public function createQuery(): string
   {
+    if ($this->update) {
+      $query = "";
+      self::update($this->currentVersion, $query);
+
+      return $query;
+    }
+
     return "create TABLE IF NOT EXISTS {$this->tName}(
 			id INT NOT NULL AUTO_INCREMENT,
 			id_uzytkownika INT NOT NULL,
@@ -30,11 +39,29 @@ class tOrders
 			produkty TEXT NULL,
       visible BOOLEAN NOT NULL DEFAULT TRUE COMMENT '0-hide, 1-show,
 			PRIMARY KEY (id)
-		) {$this->collate} ;";
+		);";
   }
 
   public function deleteQuery(): string
   {
     return "drop TABLE {$this->tName};";
+  }
+
+  private function update(int $version = 0, string &$query = "")
+  {
+    switch ((int) $version) {
+      case 20:
+        $query .= "ALTER TABLE {$this->tName} CHANGE id_uzytkownika userID INT NOT NULL; ";
+        $query .= "ALTER TABLE {$this->tName} CHANGE id_statusu statusID INT  NOT NULL; ";
+        $query .= "ALTER TABLE {$this->tName} CHANGE data_zamowienia dateOrder DATETIME DEFAULT CURRENT_TIMESTAMP; ";
+        $query .= "ALTER TABLE {$this->tName} CHANGE data_realizacji dateRealization DATETIME NULL; ";
+        $query .= "ALTER TABLE {$this->tName} CHANGE produkty products TEXT CHARACTER SET utf8 NULL; ";
+
+        return $query;
+        break;
+      default:
+        self::update($version + 1, $query);
+        break;
+    }
   }
 }
