@@ -1,0 +1,166 @@
+{
+  "ADMIN_PANEL": {
+    "SHOP": "Sklep",
+    "STATS": "Statystyki",
+    "SETTINGS": "Ustawienia",
+    "PAYMENTS": "Płatności",
+    "PRODUCTS": "Produkty",
+    "CATEGORY": "Kategorie",
+    "VAT": "Stawki vat",
+    "ORDERS": "Zamówienia",
+    "DOCS": "Dokumenty",
+    "ENTER": "Przejdz"
+  },
+  "ADMIN_PANEL_SETTINGS": {
+    "SETTINGS": "Ustawienia",
+    "PAYMENTS": "Płatności",
+    "OTHER": "Pozostałe",
+    "PAYMENTS_TAB": {
+      "TITLE": "Bramka płatności dla serwisku PayU",
+      "SANDBOX": "Testowy",
+      "PRODUCTION": "Produkcyjny",
+      "MODE": "Tryb",
+      "MERCH_ID": "Indentyfikator sprzedawcy (merchantPosId)",
+      "MERCH_SEC": "Klucz sprzedawcy (merchantSecond)",
+      "CLI_TID": "Indentyfikator clienta (clientID)",
+      "CLI_SEC": "Klucz klienta (clientSecret)",
+      "CURRENCY": "Waluta"
+    },
+    "SETTINGS_TAB": {
+      "TITLE": "Ustawienia",
+      "LANGUAGE": "Dostępne języki",
+      "CURRENCY": "Waluta",
+      "TIME_CANCEL": "Czas, po którym zamówienie zostanie anulowane",
+      "DAYS": "dni",
+      "DOC_SAVE_FORMAT": "Format zapisu dokumentu",
+      "API_KEY": "Klucz API",
+      "TRANSPORT_PRICE": "Cena dostawy/przesyłki"
+    },
+    "OTHER_TAB": {
+      "TITLE": "Pozostałe ustawienia",
+      "SHOP_DATA": "Dane sklepu",
+      "SHOP_NAME": "Nazwa sklepu",
+      "SHOP_ADRESS": "Adress sklepu",
+      "SHOP_EMAIL": "Email sklepu",
+      "SHOP_LOGO": "Logo sklepu"
+    }
+  },
+  "ADMIN_OPTION_PRODUCTS": {
+    "LP": "Lp.",
+    "NAME": "Nazwa",
+    "CATEGORY": "Kategoria",
+    "QUANTITY": "Ilość",
+    "PRICE": "Cena",
+    "UNIT": "Jednostka",
+    "DISCOUNT": "Rabat",
+    "PRICE_NETTO": "Cena Netto",
+    "TAX_RATE": "Stawka",
+    "SUM_NETTO": "Wart. netto",
+    "SUM_BRUTTO": "Wart. brutto",
+    "TRANSPORT_PRICE": "Cena Przesyłki",
+    "PHOTO": "Zdjęcie",
+    "OPTIONS": "Opcje",
+    "NO_DATA": "Brak produktów",
+    "DESCRIPTION": "Opis",
+    "ORDER": "Zamów",
+    "ADD_QUANTITY": "Dodaj ilość",
+    "ADD_ORDER_TO": "Dodaj do koszyka",
+    "ADD_NEW_PRODUCT": "Dodaj nowy produkt",
+    "EDIT_PRODUCT": "Edycja produktu",
+    "SUM": "Suma"
+  },
+  "ADMIN_OPTION_CATEGORY": {
+    "LP": "Lp.",
+    "NAME": "Nazwa",
+    "ID": "Id",
+    "OPTIONS": "Opcje",
+    "NO_DATA": "Brak kategorii",
+    "ADD_NEW_CATEGORY": "Dodaj nową kategorię",
+    "EDIT_CATEGORY": "Edytuj kategorię"
+  },
+  "ADMIN_OPTION_VAT": {
+    "LP": "Lp.",
+    "NAME": "Nazwa",
+    "ID": "Id",
+    "RATE": "Stawka",
+    "OPTIONS": "Opcje",
+    "NO_DATA": "Brak stawek VAT",
+    "ADD_NEW_VAT": "Dodaj nową stawkę VAT",
+    "EDIT_VAT": "Edytuj stawkę VAT"
+  },
+  "ADMIN_OPTION_ORDERS": {
+    "LP": "Lp.",
+    "USER": "Klient",
+    "DATE_BEGIN": "Data zamówienia",
+    "DATE_END": "Data realizacji",
+    "STATUS": "Status",
+    "PAYED": "Zapłacone",
+    "PRICE": "Cena",
+    "TRANSPORT_PRICE": "Cena Przesyłki",
+    "FULL_PRICE": "Suma",
+    "OPTIONS": "Opcje",
+    "NO_DATA": "Brak zamówień",
+    "CREATE_INVOICE": "Stwórz fakturę",
+    "NAME": "Nazwa",
+    "QUANTITY": "Ilość"
+  },
+  "ADMIN_OPTION_DOCS": {
+    "LP": "Lp.",
+    "NAME": "Nazwa",
+    "ID": "Id",
+    "OPTIONS": "Opcje",
+    "NO_DATA": "Brak dokumetów",
+    "DATE_BEGIN": "Data zamówienia",
+    "DATE_END": "Data realizacji",
+    "DOCUMENT_NO": "Dokument nr.",
+    "TO_PAY": "Do zapłaty",
+    "PAIED": "Zapłacono",
+    "SELLER": {
+      "SELLER": "Sprzedawca",
+      "NAME": "Nazwa",
+      "ADRESS": "Adres",
+      "EMAIL": "Email"
+    },
+    "BUYER": {
+      "BUYER": "Nabywca",
+      "NAME": "Nazwa",
+      "ADRESS": "Adres",
+      "EMAIL": "Email"
+    }
+  },
+  "ADMIN_STATYSTIC": {
+    "SELL_HIGH": "Wartość sprzedaży",
+    "SELL_HIGH_IN": "Wartość sprzedaży w ",
+    "IN_YEAR": " roku",
+    "MAG": "Magazyn",
+    "CONTENT_MAG": "Zawartość w magazynie",
+    "SELL_VAL_YEAR": "Ilość sprzedanych produktów w ",
+    "CATEGORY": "Najczęściej wynierane kategorie w miesiącu "
+  },
+  "FILTERS": {
+    "PAY": "Zapłać",
+    "EDIT": "Edytuj",
+    "CLOSE": "Zamknij",
+    "YES": "Tak",
+    "NO": "Nie",
+    "ASK_DELETE": "Czy napewno chcesz usunąć ten element?",
+    "ASK_STATUS": "Czy napewno chcesz zmienić status na ",
+    "FILL_FIELDS": "Uzupełnij wszystkie pola",
+    "CHANGE_STATUS": "Zmienić status na",
+    "CHOOSE_STATUS": "Wybierz status",
+    "SAVE": "Zapisz",
+    "DELETE": "Usuń",
+    "IMAGE_PREVIEW": "Podgląd",
+    "ADD_NEW": "Dodaj nowy",
+    "SEARCH": "Szukaj",
+    "ALL": "Wszystkie",
+    "SHOW_DETAILS": "Pokaż szczegóły",
+    "INVOICE_PREVIEW": "Podgld faktury",
+    "PREVIEW": "Podgld"
+  },
+  "HTTP": {
+    "NO_ACCESS": "Brak dostępu",
+    "CREATED": "Utworzono ",
+    "DELETED": "Usunięto "
+  }
+}
