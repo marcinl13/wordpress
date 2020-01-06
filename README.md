@@ -3,7 +3,7 @@
 wordpress plugin shop
 
 #fix 20
-- added import/export settings
+- added import and export settings
 - cart counter fix
 - forder accountancy splitted to accountancy and genPDF
 - weabapp cleanup
