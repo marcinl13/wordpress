@@ -19,7 +19,7 @@ class FactoryPaymentGate implements IPaymentsGates
         break;
 
       default:
-        trace(array($IPaymentsGates, $paymentModel ));
+        // trace(array($IPaymentsGates, $paymentModel ));
         break;
     }
   }
@@ -33,7 +33,7 @@ class FactoryPaymentGate implements IPaymentsGates
         break;
 
       default:
-        trace(array($IPaymentsGates, $orderID));
+        // trace(array($IPaymentsGates, $orderID));
         break;
     }
   }

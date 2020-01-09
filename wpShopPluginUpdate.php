@@ -14,7 +14,7 @@ class wpShopPluginUpdate
     $gitUpdater->setLocalData(PluginInfo::getFull());
     $gitUpdater->setPluginVersion(PluginInfo::getVersion());
     
-    trace(array('is new update' => $gitUpdater->CheckForUpdates()));
+    // trace(array('is new update' => $gitUpdater->CheckForUpdates()));
 
     $file = dirname(ROOT) . '\wordpress-' . $gitUpdater->getGitDataVersion();
 

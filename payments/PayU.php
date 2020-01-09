@@ -216,7 +216,7 @@ class PayU implements IPaymentsStatus
     )['hashOrder'];
 
     $prepare = get_object_vars(self::getOrder($hashOrder)['orders'][0]);
-    trace($prepare);
+    // trace($prepare);
 
     $status = IPaymentsStatus::COMPLETED;
 
