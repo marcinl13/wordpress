@@ -4,8 +4,8 @@ use admin\AdminKokpitMenu;
 use DB\cTables;
 use html\fillHTML;
 use plugin\PluginInfo;
-use plugin\PluginMenuBar;
 use plugin\PluginUpdater;
+use UI\UserUI;
 
 class ShopPlugin
 {
@@ -19,7 +19,7 @@ class ShopPlugin
     self::autoload();
     self::initHooks();
 
-    $menuBar = new PluginMenuBar();
+    $menuBar = new UserUI();
     $menuBar->AddToMenuBar();
 
     $tableFactory = new cTables();

@@ -25,12 +25,12 @@ export default Vue.component("component-selectBeginData", {
   },
   template: `
   <div class=" ">
-    <label for="dateFrom">od</label>
+    <label class="label-form" for="dateFrom">od</label>
     <select id="dateFrom" class="form-control" style="max-width: 50px" v-on:change="selectMonthFrom($event.target.value);">
       <option v-for="month in months" :value=month.id>{{month.name}}</option>
     </select> 
 
-    <label for="dateTo">do</label>
+    <label class="label-form" for="dateTo">do</label>
     <select id="dateTo" class="form-control" style="max-width: 50px" v-on:change="selectMonthTo($event.target.value);">
       <option v-for="month in months" :value=month.id>{{month.name}}</option>
     </select>  

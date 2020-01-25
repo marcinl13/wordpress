@@ -1,24 +1,26 @@
-:root{
+:root {
   --order-completed-bg: #28a746a5;
   --order-inprogress-bg: #fff;
   --order-deny-bg: #ffe11f98;
 }
 
-.o-cmpl-bg{
+.o-cmpl-bg {
   background-color: var(--order-completed-bg) !important;
 }
 
-.o-inpg-bg{
+.o-inpg-bg {
   background-color: var(--order-inprogress-bg) !important;
 }
 
-.o-deny-bg{
+.o-deny-bg {
   background-color: var(--order-deny-bg) !important;
 }
 
-.o-cmpl-bg:hover, .o-inpg-bg:hover, .o-deny-bg:hover{
+.o-cmpl-bg:hover,
+.o-inpg-bg:hover,
+.o-deny-bg:hover {
   /* opacity: .6; */
-  background-color:rgba(0,0,0, 0.1) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 
@@ -27,9 +29,11 @@
 .green {
   color: green !important;
 }
+
 .red {
   color: red !important;
 }
+
 .orange {
   color: orange !important;
 }
@@ -57,7 +61,7 @@
 }
 
 .small-img {
-  height: auto;
+  height: 140px;
   width: 140px;
 }
 
@@ -79,7 +83,8 @@
   padding-right: 2px;
 }
 
-.cart-buy, .cart-buy:active{
+.cart-buy,
+.cart-buy:active {
   height: 32px !important;
   background: #28a745;
   padding: 2px 6px;
@@ -87,9 +92,9 @@
   fill: red;
 }
 
-.cart-buy > svg{
+.cart-buy>svg {
   height: 30px !important;
-  fill:white;
+  fill: white;
 }
 
 /* .cart-buy:hover{
@@ -134,6 +139,23 @@
   height: 32px;
 }
 
+.order>.order-link {
+  display: none;
+}
+
+@media screen and (max-width: 767px) and (max-width: 991px) {
+
+  .order>span,
+  .order>img {
+    display: none;
+  }
+
+  .order>.order-link {
+    display: inline-block;
+  }
+
+}
+
 /* ***************************************filters*******************************************/
 
 .searchWithCategory {
@@ -155,6 +177,10 @@
 
 select {
   min-height: 38px !important;
+}
+
+.label-form {
+  font-weight: initial !important;
 }
 
 /* *************************************** podglad *******************************************/
@@ -246,29 +272,39 @@ select {
 
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
-  from {opacity: 0;} 
-  to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity:1 ;}
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* *************************************** charts ******************************************
 * charts
 */
 
-.chartBox{
+.chartBox {
   background-color: rgb(255, 255, 255);
   display: inline-block;
   width: 42vw;
   height: auto;
   float: left;
   margin: 5px 2px;
-  padding: 0 5px; 
+  padding: 0 5px;
   border-radius: 10px
-} 
+}
 
 @media screen and (max-width: 767px) and (max-width: 991px) {
   .chartBox {
@@ -279,7 +315,7 @@ select {
 
 }
 
-.customChart{
+.customChart {
   /* max-width:800px !important;  */
   /* max-width:90vw !important; 
   margin: 0px auto !important; */
@@ -298,12 +334,15 @@ select {
   margin-bottom: -1px;
   margin-right: -1px;
 }
+
 .tab-button:hover {
   background: #e0e0e0;
 }
+
 .tab-button.active {
   background: #44adc0;
 }
+
 .tab {
   border: 1px solid #ccc;
   padding: 10px;
@@ -312,14 +351,14 @@ select {
 
 
 /* ************************************** product list type grid/list *****************************************/
-.btn-list{
-  background-color: white; 
+.btn-list {
+  background-color: white;
   fill: rgb(0, 174, 255);
   max-width: 40px;
   padding: unset;
 }
 
-.btn-list-svg{
+.btn-list-svg {
   pointer-events: none;
   display: block;
   width: 100%;
@@ -334,34 +373,37 @@ select {
   @include media-breakpoint-only(lg) {
     column-count: 4;
   }
+
   @include media-breakpoint-only(xl) {
     column-count: 5;
   }
 }
 
-.grid-list{
+.grid-list {
   display: flex;
   align-items: center;
-  width:14rem !important; 
-  min-width: 14rem !important; 
+  width: 14rem !important;
+  min-width: 14rem !important;
   max-width: 14rem !important;
   margin-bottom: 10px !important;
   padding: 5px !important;
 }
 
-.grid-list> div{
+.grid-list>div {
   display: grid;
   grid-auto-flow: column;
   grid-column-gap: 5px;
   vertical-align: baseline;
 }
-.grid-list> div>span{
+
+.grid-list>div>span {
   align-self: center;
 }
 
 /* ************************************** payments *****************************************/
 
-.btn-payU, .btn-payU:hover {
+.btn-payU,
+.btn-payU:hover {
   border: 0px;
   height: 50px;
   width: 290px;

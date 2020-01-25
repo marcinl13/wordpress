@@ -112,7 +112,7 @@ class cProducts
 
     $magazine = new mMagazine();
     $amount = $magazine->getProductInMagazine2();
-    
+
     // $mMag = new mMag();
     // $amount = $mMag->getProductInMagazine2();
 
@@ -145,8 +145,8 @@ class cProducts
     $quantity = isset($body['quantity']) ? (int) $body['quantity'] : 0;
     $status = IHttpStatusCode::Forbidden;
     $message = "Error";
-    
-    
+
+
     //grand access only to admin role
     if (!$this->restAccess->accessAdmin($token, $userId)) {
       return new \WP_REST_Response(array(
@@ -155,7 +155,7 @@ class cProducts
         "data" => array()
       ), IHttpStatusCode::Unauthorized);
     }
-    
+
     $mProduct = new mProduct();
     $mProduct->setId((int) $id);
     $mProduct->setToken($token);
@@ -168,8 +168,8 @@ class cProducts
     $mProduct->setDescription((string) $body['description']);
     $mProduct->setJm((string) $body['unit']);
 
-    
-    if (isID($id)>0) {
+
+    if (isID($id) > 0) {
       $result = $mProduct->update();
 
       $status = $result ? IHttpStatusCode::OK : IHttpStatusCode::Forbidden;

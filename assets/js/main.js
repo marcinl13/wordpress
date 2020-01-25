@@ -8,7 +8,7 @@ function geter(_url, _data, _headers, _dataType = "json", _type = "GET") {
     headers: _headers,
     dataType: _dataType,
     async: false,
-    success: function(data) {
+    success: function (data) {
       result = data;
     }
   });
@@ -27,15 +27,17 @@ function serverGet(_url, _data) {
   return geter(_url, _data);
 }
 
-let calculateBrutto = (_target, _stawki = null) => {
+function calculateBrutto(_target, _taxRates = null) {
   var html = _target.offsetParent.childNodes[1].childNodes[0].childNodes[1].childNodes[1].children;
   var stawka = 0.0;
   var cenaBrutto = 0.0;
   var priceS = html[2].children[3].value;
   var priceN = html[2].children[1].value;
 
-  JSON.parse(unescape(_stawki)).forEach(element => {
-    if (priceS == element.id) stawka = parseFloat(element.stawka);
+  let taxRates = JSON.parse(unescape(_taxRates));
+
+  taxRates.forEach(element => {
+    if (priceS == element.id) stawka = parseFloat(element.taxRate);
   });
 
   var netto = priceN.replace(/ /g, ".").replace(",", ".");
@@ -65,7 +67,7 @@ function geter2(_url, _data, _headers) {
     headers: _headers,
     dataType: "json",
     async: false,
-    success: function(data) {
+    success: function (data) {
       result = data;
     }
   });
@@ -99,7 +101,7 @@ let isFloat = _number => {
 };
 
 let sumArray = _array => {
-  return _array.reduce(function(pv, cv) {
+  return _array.reduce(function (pv, cv) {
     return pv + cv;
   }, 0);
 };
@@ -132,11 +134,19 @@ let genereteRGB = () => {
   cg > 230 ? cg - 20 : cg;
   cb > 230 ? cb - 20 : cb;
 
-  return { cr, cg, cb };
+  return {
+    cr,
+    cg,
+    cb
+  };
 };
 
 function emptyChart(_chartId, _chartType = "bar") {
-  const { cr, cg, cb } = genereteRGB();
+  const {
+    cr,
+    cg,
+    cb
+  } = genereteRGB();
 
   const ctx = document.getElementById(_chartId).getContext("2d");
 
@@ -144,16 +154,14 @@ function emptyChart(_chartId, _chartType = "bar") {
     type: _chartType,
     data: {
       labels: [],
-      datasets: [
-        {
-          label: "mies",
-          data: [],
-          fill: true,
-          backgroundColor: "rgba(" + cr + ", " + cg + ", " + cb + ", 0.2)",
-          borderColor: "rgba(" + cr + ", " + cg + ", " + cb + ", 1)",
-          borderWidth: 1
-        }
-      ]
+      datasets: [{
+        label: "mies",
+        data: [],
+        fill: true,
+        backgroundColor: "rgba(" + cr + ", " + cg + ", " + cb + ", 0.2)",
+        borderColor: "rgba(" + cr + ", " + cg + ", " + cb + ", 1)",
+        borderWidth: 1
+      }]
     },
     options: {
       responsive: true,
@@ -162,17 +170,15 @@ function emptyChart(_chartId, _chartType = "bar") {
         text: "TEXT_CHART3"
       },
       scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-              max: 10,
-              callback: function(val, i, vals) {
-                return val;
-              }
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            max: 10,
+            callback: function (val, i, vals) {
+              return val;
             }
           }
-        ]
+        }]
       }
     }
   });
@@ -204,9 +210,13 @@ let createMonthSelect = (_chartId, _selectName, _lang = null) => {
 let dateStandard = (_date, _lang = null) => {
   _lang = _lang == null ? settings.curLang || "en" : _lang;
 
-  return Date.parse(_date)
-    ? new Date(_date).toLocaleDateString(_lang, { year: "numeric", month: "long", day: "numeric" })
-    : "------";
+  return Date.parse(_date) ?
+    new Date(_date).toLocaleDateString(_lang, {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    }) :
+    "------";
 };
 
 let getDateMonthList = (_lang = null) => {
@@ -266,44 +276,47 @@ let filterData = (_data, _obj, _selected, _fields = {}) => {
   if (_obj != undefined && _obj.type == FILTER_STW && _obj.val != "") {
     var filterByName = _obj.val.toLowerCase();
 
-    filtered = filtered.filter(function(data) {
+    filtered = filtered.filter(function (data) {
       return data[_fields.FILTER_STW].toLowerCase().indexOf(filterByName) == 0;
     });
   }
   if (_obj != undefined && _obj.type == FILTER_CAT && _obj.val != 0) {
-    filtered = filtered.filter(function(data) {
+    filtered = filtered.filter(function (data) {
       return parseInt(data[_fields.FILTER_CAT]) === parseInt(_obj.val);
     });
   }
   if (_obj != undefined && _obj.type == FILTER_STATUS && _obj.val != 0) {
-    filtered = filtered.filter(function(data) {
+    filtered = filtered.filter(function (data) {
       return parseInt(data[_fields.FILTER_STATUS]) === parseInt(_obj.val);
     });
   }
   if (_obj != undefined && _obj.type == FILTER_DSTART && _obj.val != 0) {
-    filtered = filtered.filter(function(data) {
+    filtered = filtered.filter(function (data) {
       var dataBegin = new Date(data[_fields.FILTER_DSTART]).getMonth() + 1;
 
       return dataBegin >= parseInt(_obj.val);
     });
   }
   if (_obj != undefined && _obj.type == FILTER_DEND && _obj.val != 0) {
-    filtered = filtered.filter(function(data) {
+    filtered = filtered.filter(function (data) {
       var dataEnd = new Date(data[_fields.FILTER_DEND]).getMonth() + 1;
 
       return dataEnd <= parseInt(_obj.val);
     });
   }
 
-  return { filtered, _selected };
+  return {
+    filtered,
+    _selected
+  };
 };
 
 let uniqID = () => {
   return (
     "_" +
     Math.random()
-      .toString(36)
-      .substr(2, 9)
+    .toString(36)
+    .substr(2, 9)
   );
 };
 
@@ -318,16 +331,16 @@ let validURL = _url => {
     "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
     "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
     "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
+    "(\\#[-a-z\\d_]*)?$",
     "i"
   ); // fragment locator
   return !!pattern.test(_url);
 };
 
 let previewImage = _image => {
-  return validURL(_image)
-    ? _image
-    : "https://childrensmattressesonline.co.uk/i/others/empty-product-large.png?v=5c3fc1a0";
+  return validURL(_image) ?
+    _image :
+    "https://childrensmattressesonline.co.uk/i/others/empty-product-large.png?v=5c3fc1a0";
 };
 
 /**================================= end ================================= */

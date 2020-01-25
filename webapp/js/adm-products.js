@@ -29,13 +29,13 @@ new Vue({
       pagitation: true
     }
   },
-  created: function() {
+  created: function () {
     this.tableID = uniqID();
 
     this.redeemData();
   },
   methods: {
-    redeemData: function() {
+    redeemData: function () {
       try {
         var response1 = serverGet(settings.apiUrl + "vat", {
           token: token.jwt
@@ -53,13 +53,13 @@ new Vue({
         this.onFilterLenght = this.products.length;
       } catch (error) {}
     },
-    onSortClick: function(s) {
+    onSortClick: function (s) {
       if (s === this.currentSort) {
         this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
       }
       this.currentSort = s;
     },
-    onPagitationClick: function(typ) {
+    onPagitationClick: function (typ) {
       if (typ == "-") {
         if (this.currentPage > 1) this.currentPage--;
       }
@@ -77,13 +77,16 @@ new Vue({
       }
       return false;
     },
-    imagePreview: function(_image) {
+    imagePreview: function (_image) {
       return previewImage(_image)
     },
-    createProduct: function() {
+    createProduct: function () {
       this.editProduct();
     },
-    editProduct: function(_id = null) {
+    calcBrutto: function (_this, _rates) {
+      return calculateBrutto(_rates, _rates)
+    },
+    editProduct: function (_id = null) {
       var categoryOptions = "";
       var vatOptions = "";
       var stawki = escape(JSON.stringify(this.vatValues).toString());
@@ -183,8 +186,8 @@ new Vue({
           </div>
           
           <div class="form-group row ">
-            <label for="zdjecie" class="col-sm-4 col-form-label col-form-label-sm">${this.phrases.PHOTO}</label>
-            <input class="form-control" id="zdjecie" type='url' value="${defaultImage}"></input>
+            <label for="image" class="col-sm-4 col-form-label col-form-label-sm">${this.phrases.PHOTO}</label>
+            <input class="form-control" id="image" type='url' value="${defaultImage}"></input>
           </div>
 
           <div class="form-group row mb-0">
@@ -209,7 +212,7 @@ new Vue({
           var priceN = document.getElementById("priceN").value;
           var priceB = document.getElementById("priceB").value;
           var details = document.getElementById("details").value;
-          var img = document.getElementById("zdjecie").value;
+          var img = document.getElementById("image").value;
           var unitVal = document.getElementById("unitList").value;
           var quantityVal = document.getElementById("quan").value;
 
@@ -230,13 +233,17 @@ new Vue({
             id_kategori: category,
             netto: priceN.toFixed(2),
             brutto: priceB.toFixed(2),
-            zdjecie: img,
+            image: img,
             opis: details,
             quantity: _id != null ? filtered.quantity : quantityVal,
             unit: unitVal
           });
 
-          if (edited.status == 200 || edited.status == 201) {
+          if (edited == null) {
+            return;
+          }
+
+          if ((edited.status == 200 || edited.status == 201)) {
             Swal.fire("", edited.message, "success");
 
             this.products = [{}];
@@ -248,7 +255,7 @@ new Vue({
         }
       });
     },
-    deleteProduct: function(_id) {
+    deleteProduct: function (_id) {
       Swal.fire({
         text: this.phrasesFilter.ASK_DELETE,
         type: "warning",
@@ -274,7 +281,7 @@ new Vue({
         }
       });
     },
-    onFilterChange: function(_obj) {
+    onFilterChange: function (_obj) {
       this.objFilter = _obj;
 
       let dataFiltered = filterData(this.products, _obj, this.selected, {
@@ -289,7 +296,7 @@ new Vue({
 
       return filtered;
     },
-    addQuantity: function(_id) {
+    addQuantity: function (_id) {
       //
       // quantityVal && isInt(quantityVal) &&
 
@@ -336,7 +343,7 @@ new Vue({
     optionBar: optionBar
   },
   computed: {
-    productsSorted: function() {
+    productsSorted: function () {
       let filtered = this.onFilterChange(this.objFilter);
 
       return sortData(filtered, this.currentSort, this.currentSortDir, this.currentPage, this.selected);

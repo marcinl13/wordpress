@@ -17,8 +17,6 @@ class Pages implements IShortCodes
     self::createPage(IShortCodes::DUMP, IShortCodes::DUMP, IShortCodes::DUMP);
     self::createPage(IShortCodes::SHOP, IShortCodes::SHOP, IShortCodes::SHOP);
     self::createPage(IShortCodes::PAYMENT_NOTYFICATION, IShortCodes::PAYMENT_NOTYFICATION, IShortCodes::PAYMENT_NOTYFICATION);
-
-    // self::createPage('sklep_produkty', 'sklepProdukty', 'sklepProdukty');
   }
 
   public function createPage($shortCode, $postTitle, $postName = 'orders', $url = null)

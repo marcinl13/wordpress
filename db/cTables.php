@@ -14,6 +14,8 @@ class cTables
   function __construct()
   {
     $this->db = new DBConnection();
+    $this->dtables = array();
+    $this->ctables = array();	
   }
 
   private function prepareCreateQuery($update = false, int $DBcurVersion = 0)
@@ -46,31 +48,31 @@ class cTables
 
   private function prepareDeleteQuery()
   {
-    // $tab = new tCategory();
-    // $this->dtables[] = $tab->deleteQuery();
-
-    // $tab = new tOrders();
-    // $this->dtables[] = $tab->deleteQuery();
-
-    // $tab = new tProducts();
-    // $this->dtables[] = $tab->deleteQuery();
-
-    // $tab = new tTransactions();
-    // $this->dtables[] = $tab->deleteQuery();
-
-    // $tab = new tVat();
-    // $this->dtables[] = $tab->deleteQuery();
-
-    // //v18
-
-    // $tab = new tDocuments18();
-    // $this->ctables[] = $tab->deleteQuery();
-
-    // $tab = new tMagazine18();
-    // $this->ctables[] = $tab->deleteQuery();
-
-    // $tab = new tInvoices();
-    // $this->ctables[] = $tab->deleteQuery();
+    $tab = new tCategory();
+    $this->dtables[] = $tab->deleteQuery();
+    
+    $tab = new tOrders();
+    $this->dtables[] = $tab->deleteQuery();
+    
+    $tab = new tProducts();
+    $this->dtables[] = $tab->deleteQuery();
+    
+    $tab = new tTransactions();
+    $this->dtables[] = $tab->deleteQuery();
+    
+    $tab = new tVat();
+    $this->dtables[] = $tab->deleteQuery();
+    
+    //v18
+    
+    $tab = new tDocuments18();
+    $this->ctables[] = $tab->deleteQuery();
+    
+    $tab = new tMagazine18();
+    $this->ctables[] = $tab->deleteQuery();
+    
+    $tab = new tInvoices();
+    $this->ctables[] = $tab->deleteQuery();
   }
 
   private function isUpToDate(int &$curVersion = 0): bool
@@ -89,11 +91,11 @@ class cTables
     $needUpdate = self::isUpToDate($curVersion);
 
     self::prepareCreateQuery($needUpdate, $curVersion);
-
+	
     if (is_array($this->ctables) && !empty($this->ctables)) {
       foreach ($this->ctables as $count => $query) {
 
-        if (sizeof($query)) {
+        if (strlen($query)>0) {
           $r = (bool) $this->db->query($query);
           $check = $check && $r;
         }
@@ -127,6 +129,6 @@ class cTables
       $check = false;
     }
 
-    return $check;
+    return (bool)$check;
   }
 }

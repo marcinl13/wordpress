@@ -74,6 +74,7 @@ include_once TABLE_DB . "tMagazine18.php";
 include_once TABLE_DB . "tInvoices.php";
 
 
+include_once TABLE_DB . "Pages.php";
 include_once TABLE_DB . "cTables.php"; //
 
 //v19
@@ -81,12 +82,12 @@ include_once TABLE_DB . "DBConnection.php";
 #endregion
 
 #region other
+include_once CLASS_PATH . 'UI/userUI.php';
+
 include_once CLASS_PATH . 'CustomHooks.php';
 include_once CLASS_PATH . 'FileRW.php';
 include_once CLASS_PATH . "Roles.php";
 include_once CLASS_PATH . 'jwt.php';
-include_once CLASS_PATH . "Pages.php";
-include_once CLASS_PATH . "Plugin/PluginMenuBar.class.php";
 include_once CLASS_PATH . "Shortcodes.php";
 include_once CLASS_PATH . "Statystic.php";
 include_once CLASS_PATH . "admin/adminKokpitMenu.php";

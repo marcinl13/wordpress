@@ -108,7 +108,7 @@ class cVat
     } else {
       $status = $model->save() ? IHttpStatusCode::Created : IHttpStatusCode::Forbidden;
 
-      $message = $status == IHttpStatusCode::OK ? "Created" : "Forbidden";
+      $message = $status == IHttpStatusCode::Created ? "Created" : "Forbidden";
     }
 
     $msg = array(
@@ -146,7 +146,7 @@ class cVat
     }
 
     $model = new mVat();
-    $model->setID((int)$id);
+    $model->setID((int) $id);
 
     $result = $model->delete();
 

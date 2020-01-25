@@ -162,5 +162,10 @@
     "NO_ACCESS": "No access",
     "CREATED": "Created ",
     "DELETED": "Deleted "
+  },
+  "NAV_MENU": {
+    "ACCOUNT": "My account",
+    "SHOP": "Shop",
+    "CART": "Cart"
   }
 }

@@ -158,6 +158,11 @@
     "INVOICE_PREVIEW": "Podgld faktury",
     "PREVIEW": "Podgld"
   },
+  "NAV_MENU": {
+    "ACCOUNT": "Moje konto",
+    "SHOP": "Sklep",
+    "CART": "Koszyk"
+  },
   "HTTP": {
     "NO_ACCESS": "Brak dostępu",
     "CREATED": "Utworzono ",
