@@ -1,10 +1,10 @@
 <?php
 
-use admin\AdminKokpitMenu;
 use DB\cTables;
 use html\fillHTML;
 use plugin\PluginInfo;
 use plugin\PluginUpdater;
+use UI\AdminUI;
 use UI\UserUI;
 
 class ShopPlugin
@@ -30,10 +30,10 @@ class ShopPlugin
   {
     add_action('init', array(__class__, 'loggedUserID'));
 
-    add_action("admin_menu", array(__class__, 'initAdminKokpit2'));
-
     add_action("wp_head", array(__class__, 'initHead'));
-
+    
+    add_action("admin_menu", array(__class__, 'initAdminKokpit'));
+    
     add_action('init', array('Shortcodes', 'init'));
 
     add_filter('plugin_action_links', array(__class__, 'Action_links'), 10, 5);
@@ -83,9 +83,10 @@ class ShopPlugin
     include_once "autoload.php";
   }
 
-  public static function initAdminKokpit2()
+  public static function initAdminKokpit()
   {
-    new AdminKokpitMenu();
+    $menu = new AdminUI();
+    $menu->AddToMenuBar();
   }
 
   public static function initHead()

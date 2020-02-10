@@ -50,8 +50,7 @@ include_once REST_API . "cOrder.php";
 include_once REST_API . "cCart.php";
 include_once REST_API . "cVat.php";
 include_once REST_API . "cMagazine.php";
-include_once REST_API . "cDocs.php";
-// include_once REST_API . "Invoice.php";
+// include_once REST_API . "cDocs.php";
 include_once REST_API . "restAccess.php"; //
 include_once REST_API . "RestAPI.php";  //
 #endregion
@@ -83,6 +82,7 @@ include_once TABLE_DB . "DBConnection.php";
 
 #region other
 include_once CLASS_PATH . 'UI/userUI.php';
+include_once CLASS_PATH . 'UI/adminUI.php';
 
 include_once CLASS_PATH . 'CustomHooks.php';
 include_once CLASS_PATH . 'FileRW.php';
@@ -90,8 +90,8 @@ include_once CLASS_PATH . "Roles.php";
 include_once CLASS_PATH . 'jwt.php';
 include_once CLASS_PATH . "Shortcodes.php";
 include_once CLASS_PATH . "Statystic.php";
-include_once CLASS_PATH . "admin/adminKokpitMenu.php";
 
+include_once INCLUDES_PATH . 'htmlHead.php';
 include_once INCLUDES_PATH . "mp_functions.php";
 
 include CLASS_PATH . "Plugin/PluginInfo.class.php";

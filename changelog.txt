@@ -2,7 +2,7 @@
 - fix main.js
 - fix adm-products.js
 - lang added NAV_MENU
-- added userUI
+- added userUI, adminUI
 - modify main.css
 
 #fix 20

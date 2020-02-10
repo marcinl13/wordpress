@@ -21,14 +21,14 @@ class Shortcodes implements IShortCodes
 
   public static function init()
   {
-    add_shortcode(IShortCodes::DUMP, array(__class__, 'koszyk'));
-    add_shortcode(IShortCodes::SHOP, array(__class__, 'pokazProdukty'));
-    add_shortcode(IShortCodes::USER_ORDERS, array(__class__, 'userOrders'));
+    add_shortcode(IShortCodes::DUMP, array(__class__, 'cartPage'));
+    add_shortcode(IShortCodes::SHOP, array(__class__, 'shopPage'));
+    add_shortcode(IShortCodes::USER_ORDERS, array(__class__, 'userOrdersPage'));
     add_shortcode(IShortCodes::PAYMENT_NOTYFICATION, array(__class__, 'paymentNotyfication'));
   }
 
 
-  public function pokazProdukty()
+  public function shopPage()
   {
     CustomHooks::AddHookLanguage("ADMIN_OPTION_PRODUCTS");
 
@@ -37,7 +37,7 @@ class Shortcodes implements IShortCodes
   }
 
 
-  public static function koszyk()
+  public static function cartPage()
   {
     CustomHooks::AddHookLanguage("ADMIN_OPTION_PRODUCTS");
     CustomHooks::AddHookTransportPrice();
@@ -47,7 +47,7 @@ class Shortcodes implements IShortCodes
     $input->inputMe('usr-koszyk');
   }
 
-  public static function userOrders()
+  public static function userOrdersPage()
   {
     if (get_current_user_id() > 0 && is_admin() == false) {
       CustomHooks::AddHookLanguage("ADMIN_OPTION_ORDERS");

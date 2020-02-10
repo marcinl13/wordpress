@@ -1,8 +1,6 @@
 <?php
 
-namespace admin;
-
-include_once INCLUDES_PATH . 'htmlHead.php';
+namespace UI;
 
 use Accountancy\addInvoice;
 use Accountancy\DOC_FVS;
@@ -24,7 +22,7 @@ use plugin\PluginUpdater;
 use Plugin\wpShopPluginUninstall;
 use Plugin\wpShopPluginUpdate;
 
-class AdminKokpitMenu
+class AdminUI
 {
   private static $configFile = CONFIG_FILE;
 
@@ -33,10 +31,10 @@ class AdminKokpitMenu
     $src = new fillHTML();
     $src->addToHeadTag();
 
-    self::buildMenu();
+    // self::AddToMenuBar();
   }
 
-  public static function buildMenu()
+  public function AddToMenuBar()
   {
     $getLangData = (array) Phrases::getPhreses('ADMIN_PANEL');
 

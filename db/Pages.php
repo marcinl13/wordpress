@@ -42,8 +42,8 @@ class Pages implements IShortCodes
   {
     $db = new DBConnection();
 
-    // $query = "FROM wp_posts WHERE post_content LIKE \"[%]\" ";
-    $query = "FROM wp_posts WHERE post_content LIKE \"[loginModal]\" ";
+    $query = "FROM wp_posts WHERE post_content LIKE \"[%]\" ";
+    // $query = "FROM wp_posts WHERE post_content LIKE \"[loginModal]\" ";
     // $rows = self::$db->getRow("SELECT COUNT(*) as count {$query}", ARRAY_A)['count'];
     $result = $db->query("DELETE {$query}");
 
