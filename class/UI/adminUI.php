@@ -121,7 +121,7 @@ class AdminUI
       array(
         "img" => "https://www.shareicon.net/data/512x512/2015/09/22/105521_database_512x512.png",
         "text" => $settings,
-        "linkHref" => "?page=options",
+        "linkHref" => "?page=settings",
         "linkText" => $enter
       ),
       array(
