@@ -134,8 +134,8 @@
     "IN_YEAR": " roku",
     "MAG": "Magazyn",
     "CONTENT_MAG": "Zawartość w magazynie",
-    "SELL_VAL_YEAR": "Ilość sprzedanych produktów w miesiącu ",
-    "CATEGORY": "Najczęściej wynierane kategorie w miesiącu "
+    "SELL_VAL_YEAR": "Ilość sprzedanych produktów w miesiącu: ",
+    "CATEGORY": "Najczęściej wynierane kategorie w miesiącu: "
   },
   "FILTERS": {
     "PAY": "Zapłać",
